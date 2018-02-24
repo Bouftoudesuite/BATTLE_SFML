@@ -3,7 +3,7 @@
 
 Menu::Menu(unsigned int width, unsigned int height)
 {
-    if (_font.loadFromFile("font/arial.ttf"))
+    if (_font.loadFromFile("assets/font/arial.ttf"))
     {
         _selectedItemIndex = 0;
         _title.setFont(_font);
@@ -93,16 +93,15 @@ void Menu::MoveDown()
 
 int Menu::Run(sf::RenderWindow &window)
 {
-    bool Running;
 	sf::Music menuMusic;
 	sf::Sound menuMove;
 	sf::Sound menuSelect;
 	sf::SoundBuffer bufferMenuMove;
 	sf::SoundBuffer bufferMenuSelect;
-
-    Running = true;
+	const std::string pathMusicMenuMove = "assets/music/menu/move.ogg";
+	const std::string pathMusicMenuSelect = "assets/music/menu/select.ogg";
 	
-	if (!bufferMenuMove.loadFromFile("music/menu/move.ogg") || !bufferMenuSelect.loadFromFile("music/menu/select.ogg"))
+	if (!bufferMenuMove.loadFromFile(pathMusicMenuMove) || !bufferMenuSelect.loadFromFile(pathMusicMenuSelect))
 	{
 		return (CLOSE);
 	}

@@ -100,7 +100,7 @@ CellType** parseMap(unsigned int* width, unsigned int* height)
     unsigned int k;
     CellType** _cells;
 
-    std::ifstream file("map/map.txt", std::ios::in);
+    std::ifstream file("assets/map/map.txt", std::ios::in);
     if(file)
     {
         i = 0;

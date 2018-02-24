@@ -131,24 +131,28 @@ void Game::moveUnit(Unit& unit, Direction direction, unsigned int n)
     stop = false;
     tmp_x = unit.getX();
     tmp_y = unit.getY();
-    while (i < n)
-    {
-        if (direction == North)
-        {
-            tmp_y -= 1;
-        }
-        else if (direction == South)
-        {
-            tmp_y += 1;
-        }
-        else if (direction == East)
-        {
-            tmp_x -= 1;
-        }
-        else if (direction == West)
-        {
-            tmp_x += 1;
-        }
+
+	while (i < n)
+	{
+		switch (direction)
+		{
+			case North:
+				tmp_y -= 1;
+				break;
+
+			case South:
+				tmp_y += 1;
+				break;
+
+			case East:
+				tmp_x -= 1;
+				break;
+
+			case West:
+				tmp_x += 1;
+				break;
+		}
+
         while (j < _units.size())
         {
             if (_units[j]->getOwner().getName() != unit.getOwner().getName() && _units[j]->getField() == unit.getField()
@@ -164,8 +168,10 @@ void Game::moveUnit(Unit& unit, Direction direction, unsigned int n)
             }
             j++;
         }
+
         i++;
     }
+
     if (unit.getMp() < n && !stop)
     {
         std::cout << "invalid move: mp" << std::endl;
@@ -295,28 +301,28 @@ int Game::Run(sf::RenderWindow &window)
 {
     int numPlayer;
     int numUnits;
-    bool Running;
 	sf::Sound gong;
 	sf::SoundBuffer bufferGong;
+	const std::string pathImageMap = "assets/image/Map.png";
+	const std::string pathImageSprite = "assets/image/Sprite.png";
+	const std::string pathMusicGong = "assets/music/game/gong.ogg";
 
-    Running = true;
 	numPlayer = 0;
     numUnits = 0;
-
     initPlayers();
     
-	if (!bufferGong.loadFromFile("music/game/gong.ogg"))
+	if (!bufferGong.loadFromFile(pathMusicGong))
 	{
 		return (CLOSE);
 	}
 	gong.setBuffer(bufferGong);
 	gong.play();
 
-    if (!_map.load("image/Map.png", sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
+    if (!_map.load(pathImageMap, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
     {
         return (CLOSE);
     }
-    if (!loadUnits("image/Sprite.png", sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
+    if (!loadUnits(pathImageSprite, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
     {
         return (CLOSE);
     }
@@ -363,7 +369,7 @@ int Game::Run(sf::RenderWindow &window)
             newTurn();
         }
 
-        reloadUnits("image/Sprite.png", sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight());
+        reloadUnits(pathImageSprite, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight());
         window.clear();
         window.draw(_map);
         drawItems(window);
