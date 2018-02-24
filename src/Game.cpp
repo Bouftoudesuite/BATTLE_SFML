@@ -132,26 +132,26 @@ void Game::moveUnit(Unit& unit, Direction direction, unsigned int n)
     tmp_x = unit.getX();
     tmp_y = unit.getY();
 
-	while (i < n)
+    while (i < n)
+    {
+        switch (direction)
 	{
-		switch (direction)
-		{
-			case North:
-				tmp_y -= 1;
-				break;
+	    case North:
+	        tmp_y -= 1;
+		break;
 
-			case South:
-				tmp_y += 1;
-				break;
+	    case South:
+	        tmp_y += 1;
+		break;
 
-			case East:
-				tmp_x -= 1;
-				break;
+	    case East:
+	        tmp_x -= 1;
+		break;
 
-			case West:
-				tmp_x += 1;
-				break;
-		}
+	    case West:
+		tmp_x += 1;
+		break;
+	}
 
         while (j < _units.size())
         {
