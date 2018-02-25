@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Fichiers sources">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Fichiers d%27en-tête">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -13,122 +9,125 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{9be9cc3e-0aa8-40d6-b130-081feb7f6414}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Attack.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Menu.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Carrier.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Player.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Castle.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Roach.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\CellProperty.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Stalker.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Corruptor.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Tank.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Game.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Unit.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Hero.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Ursadon.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\main.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Attack.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Map.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Carrier.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Marine.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Castle.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Menu.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\CellProperty.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Player.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Corruptor.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Roach.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Game.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Stalker.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Hero.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Tank.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Unit.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Map.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\ETNA\C++\Game\src\Ursadon.cpp">
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Marine.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Attack.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Menu.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Carrier.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Player.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Castle.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Roach.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\CellProperty.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Stalker.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\CellType.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Stats.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Corruptor.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Tank.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Cscreen.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Unit.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Direction.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\UnitField.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Game.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Ursadon.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Hero.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Attack.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Map.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Carrier.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Marine.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Castle.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Menu.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\CellProperty.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Player.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\CellType.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Roach.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Corruptor.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Stalker.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Cscreen.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Tank.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Direction.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Unit.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Game.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\UnitField.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Hero.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Ursadon.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Map.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\ETNA\C++\Game\src\Stats.hh">
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Marine.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
   </ItemGroup>

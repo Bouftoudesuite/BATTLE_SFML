@@ -1,6 +1,6 @@
 #include "Unit.hh"
 
-Unit::Unit(unsigned int x, unsigned int y, Player& player) : _x(x), _y(y), _player(player)
+Unit::Unit(unsigned int x, unsigned int y, Player& player) : _x(x), _y(y), _player(player), _tileSize(0,0)
 {}
 
 bool Unit::isDead() const
@@ -61,6 +61,11 @@ unsigned int Unit::getMpMax() const
 Player& Unit::getOwner()
 {
     return (_player);
+}
+
+sf::Vector2u Unit::getTilesize() const
+{
+	return (_tileSize);
 }
 
 void Unit::setX(unsigned int x)

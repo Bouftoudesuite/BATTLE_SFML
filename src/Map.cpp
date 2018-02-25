@@ -6,9 +6,10 @@
 #include "Map.hh"
 
 Map::Map() :
-    _width(20),
-    _height(20),
-    _cells(parseMap(&_width, &_height))
+	_width(20),
+	_height(20),
+	_cells(parseMap(&_width, &_height)),
+	_tileSize(0, 0)
 {}
 
 Map::~Map()
@@ -68,6 +69,11 @@ CellProperty Map::getCellProperties(unsigned int x, unsigned int y)
         cell.setFlyable();
     }
     return (cell);
+}
+
+sf::Vector2u Map::getTilesize() const
+{
+	return (_tileSize);
 }
 
 bool Map::canGo(unsigned int x, unsigned int y, const Unit& unit)
@@ -170,7 +176,7 @@ bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int w
     {
         return (false);
     }
-
+	_tileSize = tileSize;
     _vertices.setPrimitiveType(sf::Quads);
     _vertices.resize(width * height * 4);
 
@@ -182,20 +188,20 @@ bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int w
         {
             int tileNumber = getCell(i, j);
 
-            int tu = tileNumber % (_tileset.getSize().x / tileSize.x);
-            int tv = tileNumber / (_tileset.getSize().x / tileSize.x);
+            int tu = tileNumber % (_tileset.getSize().x / _tileSize.x);
+            int tv = tileNumber / (_tileset.getSize().x / _tileSize.x);
 
             sf::Vertex* quad = &_vertices[(i + j * width) * 4];
 
-            quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
-            quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
-            quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
-            quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
+            quad[0].position = sf::Vector2f(i * _tileSize.x, j * _tileSize.y);
+            quad[1].position = sf::Vector2f((i + 1) * _tileSize.x, j * _tileSize.y);
+            quad[2].position = sf::Vector2f((i + 1) * _tileSize.x, (j + 1) * _tileSize.y);
+            quad[3].position = sf::Vector2f(i * _tileSize.x, (j + 1) * _tileSize.y);
 
-            quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-            quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
-            quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
-            quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+            quad[0].texCoords = sf::Vector2f(tu * _tileSize.x, tv * _tileSize.y);
+            quad[1].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, tv * _tileSize.y);
+            quad[2].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, (tv + 1) * _tileSize.y);
+            quad[3].texCoords = sf::Vector2f(tu * _tileSize.x, (tv + 1) * _tileSize.y);
 
             j++;
         }

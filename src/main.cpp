@@ -1,22 +1,26 @@
 #include <SFML/Graphics.hpp> 
 #include <SFML/Audio.hpp>
+#include <ctime>
+#include <vector>
 #include "Game.hh"
 #include "Menu.hh"
-#include <ctime>
 
 int main()
 {
-    int action;
+    int nbScreen;
+	std::vector<Cscreen*> screens;
     std::srand(std::time(nullptr));
     sf::RenderWindow window(sf::VideoMode(638, 638), "Final_Game");
-
     Menu menu(window.getSize().x, window.getSize().y);
-    action = menu.Run(window);
+	Game game(window.getSize().x, window.getSize().y, menu);
+	
+	nbScreen = 0;
+	screens.push_back(&menu);
+	screens.push_back(&game);
 
-    if (action == PLAY)
+    while (nbScreen != CLOSE)
     {
-        Game game(window.getSize().x, window.getSize().y, menu.getSelectedItem() + 2);
-        game.Run(window);
+        nbScreen = screens[nbScreen]->Run(window);
     }
 
     window.close();

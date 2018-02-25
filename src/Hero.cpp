@@ -268,6 +268,7 @@ bool Hero::load(const std::string& tileset, sf::Vector2u tileSize, int width, in
         return (false);
     }
 
+	_tileSize = tileSize;
     _vertices.setPrimitiveType(sf::Quads);
     _vertices.resize(width * height * 4);
 
@@ -310,25 +311,25 @@ bool Hero::load(const std::string& tileset, sf::Vector2u tileSize, int width, in
             break;
     }
 
-    unsigned int tu = _tileNumber % (_tileset.getSize().x / tileSize.x);
-    unsigned int tv = _tileNumber / (_tileset.getSize().x / tileSize.x);
+    unsigned int tu = _tileNumber % (_tileset.getSize().x / _tileSize.x);
+    unsigned int tv = _tileNumber / (_tileset.getSize().x / _tileSize.x);
 
     _quad = &_vertices[(i + j * width) * 4];
 
-    _quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
-    _quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
-    _quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
-    _quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
+    _quad[0].position = sf::Vector2f(i * _tileSize.x, j * _tileSize.y);
+    _quad[1].position = sf::Vector2f((i + 1) * _tileSize.x, j * _tileSize.y);
+    _quad[2].position = sf::Vector2f((i + 1) * _tileSize.x, (j + 1) * _tileSize.y);
+    _quad[3].position = sf::Vector2f(i * _tileSize.x, (j + 1) * _tileSize.y);
 
-    _quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-    _quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
-    _quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
-    _quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+    _quad[0].texCoords = sf::Vector2f(tu * _tileSize.x, tv * _tileSize.y);
+    _quad[1].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, tv * _tileSize.y);
+    _quad[2].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, (tv + 1) * _tileSize.y);
+    _quad[3].texCoords = sf::Vector2f(tu * _tileSize.x, (tv + 1) * _tileSize.y);
 
     return (true);
 }
 
-bool Hero::reload(const std::string& tileset, sf::Vector2u tileSize, int width, int height)
+bool Hero::reload(const std::string& tileset, int width, int height)
 {
     int i = getX();
     int j = getY();
@@ -338,18 +339,18 @@ bool Hero::reload(const std::string& tileset, sf::Vector2u tileSize, int width, 
         return (false);
     }
 
-    unsigned int tu = _tileNumber % (_tileset.getSize().x / tileSize.x);
-    unsigned int tv = _tileNumber / (_tileset.getSize().x / tileSize.x);
+    unsigned int tu = _tileNumber % (_tileset.getSize().x / _tileSize.x);
+    unsigned int tv = _tileNumber / (_tileset.getSize().x / _tileSize.x);
 
-    _quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
-    _quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
-    _quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
-    _quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
+    _quad[0].position = sf::Vector2f(i * _tileSize.x, j * _tileSize.y);
+    _quad[1].position = sf::Vector2f((i + 1) * _tileSize.x, j * _tileSize.y);
+    _quad[2].position = sf::Vector2f((i + 1) * _tileSize.x, (j + 1) * _tileSize.y);
+    _quad[3].position = sf::Vector2f(i * _tileSize.x, (j + 1) * _tileSize.y);
 
-    _quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-    _quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
-    _quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
-    _quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+    _quad[0].texCoords = sf::Vector2f(tu * _tileSize.x, tv * _tileSize.y);
+    _quad[1].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, tv * _tileSize.y);
+    _quad[2].texCoords = sf::Vector2f((tu + 1) * _tileSize.x, (tv + 1) * _tileSize.y);
+    _quad[3].texCoords = sf::Vector2f(tu * _tileSize.x, (tv + 1) * _tileSize.y);
 
 
     return (true);

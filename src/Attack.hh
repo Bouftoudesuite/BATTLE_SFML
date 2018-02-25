@@ -5,26 +5,14 @@
 #include "Unit.hh"
 #include "Tank.hh"
 
-template<class T>
 class Attack
 {
 public:
-    Attack(Game const& game, T& unit);
+    Attack(Game const& game, Unit& unit);
     void perform(unsigned int x, unsigned int y);
 private:
     Game _game;
-    T& _unit;
-};
-
-template<>
-class Attack<Tank>
-{
-public:
-    Attack(Game const& game, Tank& unit);
-    void perform(unsigned int x, unsigned int y);
-private:
-    Game _game;
-    Tank& _unit;
+    Unit& _unit;
 };
 
 #endif

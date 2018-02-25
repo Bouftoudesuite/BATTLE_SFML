@@ -24,6 +24,7 @@ public:
 	unsigned int getApMax() const;
 	unsigned int getMpMax() const;
     Player& getOwner();
+	sf::Vector2u getTilesize() const;
     virtual UnitField getField() const = 0;
     virtual unsigned int getCost() const = 0;
     virtual unsigned int getAttackRange() const = 0;
@@ -44,12 +45,13 @@ public:
     virtual void resetActions() = 0;
     virtual void turn(Direction direction) = 0;
     virtual bool load(const std::string& tileset, sf::Vector2u tileSize, int width, int height) = 0;
-    virtual bool reload(const std::string& tileset, sf::Vector2u tileSize, int width, int height) = 0;
+    virtual bool reload(const std::string& tileset, int width, int height) = 0;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 protected:
     sf::Vertex *_quad;
     sf::VertexArray _vertices;
     sf::Texture _tileset;
+	sf::Vector2u _tileSize;
     unsigned int _tileNumber;
 private:
     unsigned int _x;

@@ -93,21 +93,21 @@ void Menu::MoveDown()
 
 int Menu::Run(sf::RenderWindow &window)
 {
-	sf::Music menuMusic;
-	sf::Sound menuMove;
-	sf::Sound menuSelect;
-	sf::SoundBuffer bufferMenuMove;
-	sf::SoundBuffer bufferMenuSelect;
-	const std::string pathMusicMenuMove = "assets/music/menu/move.ogg";
-	const std::string pathMusicMenuSelect = "assets/music/menu/select.ogg";
+    sf::Music menuMusic;
+    sf::Sound menuMove;
+    sf::Sound menuSelect;
+    sf::SoundBuffer bufferMenuMove;
+    sf::SoundBuffer bufferMenuSelect;
+    const std::string pathMusicMenuMove = "assets/music/menu/move.ogg";
+    const std::string pathMusicMenuSelect = "assets/music/menu/select.ogg";
 	
-	if (!bufferMenuMove.loadFromFile(pathMusicMenuMove) || !bufferMenuSelect.loadFromFile(pathMusicMenuSelect))
-	{
-		return (CLOSE);
-	}
-	menuMusic.setLoop(true);
-	menuMove.setBuffer(bufferMenuMove);
-	menuSelect.setBuffer(bufferMenuSelect);
+    if (!bufferMenuMove.loadFromFile(pathMusicMenuMove) || !bufferMenuSelect.loadFromFile(pathMusicMenuSelect))
+    {
+        return (CLOSE);
+    }
+    menuMusic.setLoop(true);
+    menuMove.setBuffer(bufferMenuMove);
+    menuSelect.setBuffer(bufferMenuSelect);
 
     sf::Event event;
     while (window.waitEvent(event))
@@ -121,24 +121,25 @@ int Menu::Run(sf::RenderWindow &window)
             switch (event.key.code)
             {
                 case sf::Keyboard::Up:
-					menuMove.play();
+		    menuMove.play();
                     MoveUp();
                     break;
 
                 case sf::Keyboard::Down:
-					menuMove.play();
+		    menuMove.play();
                     MoveDown();
                     break;
 
                 case sf::Keyboard::Return:
-					menuSelect.play();
-					Sleep(200);
+		    menuSelect.play();
+		    Sleep(200);
                     return (PLAY);
                 
                 default:
                     break;
             }
         }
+	
         window.clear();
         draw(window);
         window.display();

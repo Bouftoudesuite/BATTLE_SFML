@@ -5,8 +5,8 @@
 #include <SFML/Audio.hpp>
 #include "Cscreen.hh"
 
+#define CLOSE -1
 #define PLAY 1
-#define CLOSE 2
 #define MAX_PLAYER 7
 
 class Menu : public Cscreen
