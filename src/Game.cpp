@@ -365,6 +365,11 @@ int Game::Run(sf::RenderWindow &window)
     sf::Event event;
     while (window.waitEvent(event))
     {
+        if (_units[numUnits]->getMp() <= 0 || _units[numUnits]->isDead())
+        {
+            numUnits++;
+            numPlayer++;
+        }
         if (event.type == sf::Event::Closed)
         {
             return (CLOSE);
@@ -377,7 +382,7 @@ int Game::Run(sf::RenderWindow &window)
 					_units[numUnits]->turn(North);
                     moveUnit(*_units[numUnits], North, 1);
 					musicMovePlayer.play();
-		    break;
+		            break;
 		    
                 case sf::Keyboard::Down:
 					_units[numUnits]->turn(South);
@@ -396,20 +401,27 @@ int Game::Run(sf::RenderWindow &window)
                     moveUnit(*_units[numUnits], West, 1);
 					musicMovePlayer.play();
                     break;
+
+                case sf::Keyboard::I:
+                    _units[numUnits]->printInfo();
+                    break;
 				
 				case sf::Keyboard::Return:
 					targetPosition = askPosition(window);
-					convertPixelToCoord(targetPosition);
-					Attack attack(*this, *_units[numUnits]);
-					attack.perform(targetPosition.x, targetPosition.y);
+                    if (targetPosition.x != (-1))
+                    {
+                        convertPixelToCoord(targetPosition);
+                        Attack attack(*this, *_units[numUnits]);
+                        attack.perform((unsigned int)targetPosition.x, (unsigned int)targetPosition.y);
+                    }
 					break;
+
+                default:
+                    break;
             }
         }
 
-        if (_units[numUnits]->getMp() <= 0)
-        {
-            numUnits++;
-        }
+
         if (numUnits == _players.size())
         {
             numUnits = 0;

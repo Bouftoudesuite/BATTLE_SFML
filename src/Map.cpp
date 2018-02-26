@@ -163,7 +163,7 @@ unsigned int Map::getDistanceBetween(unsigned int firstX, unsigned int firstY, u
 {
     unsigned int distance;
 
-    distance = (unsigned int)std::abs((int)firstX - (int)firstY) + (unsigned int)std::abs((int)secondX - (int)secondY);
+    distance = (unsigned int)std::abs((int)firstX - (int)secondX) + (unsigned int)std::abs((int)firstY - (int)secondY);
     return (distance);
 }
 

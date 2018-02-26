@@ -14,7 +14,8 @@ public:
 	unsigned int getAttackRange() const override;
 	unsigned int getAttackMinRange() const override;
 	unsigned int getAttackArea() const override;
-    static Stats const& getBaseStats();
+	unsigned int getAttackDammage() const override;
+	static Stats const& getBaseStats();
     void resetStats() override;
     void resetActions() override;
     void turn(Direction direction) override;

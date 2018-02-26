@@ -13,17 +13,22 @@ unsigned int Hero::getCost() const
 
 unsigned int Hero::getAttackRange() const
 {
-    return (1);
+    return (0);
 }
 
 unsigned int Hero::getAttackMinRange() const
 {
-    return (1);
+    return (0);
 }
 
 unsigned int Hero::getAttackArea() const
 {
     return (1);
+}
+
+unsigned int Hero::getAttackDammage() const
+{
+    return (100);
 }
 
 Stats const& Hero::getBaseStats()

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Unit.hh"
 
 Unit::Unit(unsigned int x, unsigned int y, Player& player) : _x(x), _y(y), _player(player), _tileSize(0,0)
@@ -122,6 +123,14 @@ void Unit::setOwner(Player &player)
 {
     _player = player;
 }
+
+void Unit::printInfo()
+{
+    std::cout << getOwner().getName() << std::endl;
+    std::cout << getHp() << std::endl;
+    std::cout << getMp() << std::endl;
+}
+
 
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

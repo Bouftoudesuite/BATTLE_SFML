@@ -30,6 +30,7 @@ public:
     virtual unsigned int getAttackRange() const = 0;
     virtual unsigned int getAttackMinRange() const = 0;
     virtual unsigned int getAttackArea() const = 0;
+	virtual unsigned int getAttackDammage() const = 0;
     void setX(unsigned int x);
     void setY(unsigned int y);
     void setHp(unsigned int hp);
@@ -41,6 +42,7 @@ public:
     void setApMax(unsigned int ap);
     void setMpMax(unsigned int mp);
     void setOwner(Player& player);
+	void printInfo();
     virtual void resetStats() = 0;
     virtual void resetActions() = 0;
     virtual void turn(Direction direction) = 0;

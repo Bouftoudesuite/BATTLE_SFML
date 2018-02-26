@@ -7,7 +7,6 @@ Attack::Attack(Game const& game, Unit& unit) : _game(game), _unit(unit)
 void Attack::perform(unsigned int x, unsigned int y)
 {
     unsigned int i;
-    int pourcent;
     std::vector<Unit*> toAttack;
 
     i = 0;
@@ -19,8 +18,7 @@ void Attack::perform(unsigned int x, unsigned int y)
     {
         std::cout << "no more actions can be performed" << std::endl;
     }
-    else if (Map::getDistanceBetween(_unit.getX(), _unit.getY(), x, y) > _unit.getAttackRange()
-             || Map::getDistanceBetween(_unit.getX(), _unit.getY(), x, y) < _unit.getAttackMinRange())
+    else if (Map::getDistanceBetween(_unit.getX(), _unit.getY(), x, y) > _unit.getAttackArea())
     {
         std::cout << "out of range" << std::endl;
     }
@@ -30,8 +28,7 @@ void Attack::perform(unsigned int x, unsigned int y)
         toAttack = _game.getInRange(x, y, _unit.getAttackMinRange(), _unit.getAttackRange(), _unit.getField());
         while (i < toAttack.size())
         {
-            pourcent = 20;
-            toAttack[i]->setHp(_unit.getHpMax() * (1 - pourcent / 100));
+            toAttack[i]->setHp((_unit.getHp() - _unit.getAttackDammage()));
             i++;
         }
     }

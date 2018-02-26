@@ -9,7 +9,7 @@ class Attack
 {
 public:
     Attack(Game const& game, Unit& unit);
-    void perform(unsigned int x, unsigned int y);
+    void perform(unsigned x, unsigned int y);
 private:
     Game _game;
     Unit& _unit;
