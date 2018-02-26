@@ -10,12 +10,12 @@ class Hero : public Unit
 public:
     using Unit::Unit;
     UnitField getField() const override;
-	unsigned int getCost() const override;
-	unsigned int getAttackRange() const override;
-	unsigned int getAttackMinRange() const override;
-	unsigned int getAttackArea() const override;
-	unsigned int getAttackDammage() const override;
-	static Stats const& getBaseStats();
+    unsigned int getCost() const override;
+    unsigned int getAttackRange() const override;
+    unsigned int getAttackMinRange() const override;
+    unsigned int getAttackArea() const override;
+    unsigned int getAttackDammage() const override;
+    static Stats const& getBaseStats();
     void resetStats() override;
     void resetActions() override;
     void turn(Direction direction) override;

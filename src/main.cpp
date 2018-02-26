@@ -8,15 +8,15 @@
 int main()
 {
     int nbScreen;
-	std::vector<Cscreen*> screens;
+    std::vector<Cscreen*> screens;
     std::srand(std::time(nullptr));
     sf::RenderWindow window(sf::VideoMode(638, 638), "Final_Game");
     Menu menu(window.getSize().x, window.getSize().y);
-	Game game(window.getSize().x, window.getSize().y, menu);
+    Game game(window.getSize().x, window.getSize().y, menu);
 	
-	nbScreen = 0;
-	screens.push_back(&menu);
-	screens.push_back(&game);
+    nbScreen = 0;
+    screens.push_back(&menu);
+    screens.push_back(&game);
 
     while (nbScreen != CLOSE)
     {

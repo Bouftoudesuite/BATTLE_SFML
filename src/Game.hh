@@ -24,8 +24,8 @@ public:
     void resetUnits();
     void newTurn();
     bool didLose(Player const& player);
-	void convertPixelToCoord(sf::Vector2i& pixelCoord);
-	static sf::Vector2i askPosition(sf::RenderWindow &window);
+    void convertPixelToCoord(sf::Vector2i& pixelCoord);
+    static sf::Vector2i askPosition(sf::RenderWindow &window);
     void moveUnit(Unit& unit, Direction direction, unsigned int n);
     std::vector<Unit*> getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field);
     bool loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
@@ -36,7 +36,7 @@ private:
     unsigned int _width;
     unsigned int _height;
     Map _map;
-	Menu const& _menu;
+    Menu const& _menu;
     std::vector<Player*> _players;
     std::vector<Unit*> _units;
 };

@@ -66,7 +66,7 @@ Player& Unit::getOwner()
 
 sf::Vector2u Unit::getTilesize() const
 {
-	return (_tileSize);
+    return (_tileSize);
 }
 
 void Unit::setX(unsigned int x)

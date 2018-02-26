@@ -22,7 +22,7 @@ unsigned int Map::getWidth() const
 
 unsigned int Map::getHeight() const
 {
-	return (_height);
+    return (_height);
 }
 
 CellType Map::getCell(unsigned int x, unsigned int y) const
@@ -73,7 +73,7 @@ CellProperty Map::getCellProperties(unsigned int x, unsigned int y)
 
 sf::Vector2u Map::getTilesize() const
 {
-	return (_tileSize);
+    return (_tileSize);
 }
 
 bool Map::canGo(unsigned int x, unsigned int y, const Unit& unit)
@@ -176,7 +176,7 @@ bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int w
     {
         return (false);
     }
-	_tileSize = tileSize;
+    _tileSize = tileSize;
     _vertices.setPrimitiveType(sf::Quads);
     _vertices.resize(width * height * 4);
 

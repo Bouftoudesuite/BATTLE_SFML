@@ -116,35 +116,35 @@ bool Game::didLose(Player const& player)
 
 void Game::convertPixelToCoord(sf::Vector2i& pixelCoord)
 {
-	pixelCoord.x /=  _map.getTilesize().x;
-	pixelCoord.y /= _map.getTilesize().y;
+    pixelCoord.x /=  _map.getTilesize().x;
+    pixelCoord.y /= _map.getTilesize().y;
 }
 
 
 sf::Vector2i Game::askPosition(sf::RenderWindow &window)
 {
-	sf::Vector2i localPosition;
-	sf::Event event;
+    sf::Vector2i localPosition;
+    sf::Event event;
 
-	while (window.waitEvent(event))
+    while (window.waitEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
 	{
-		if (event.type == sf::Event::Closed)
-		{
-			return (sf::Vector2i(-1, -1));
-		}
-
-		else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
-		{
-			localPosition = sf::Mouse::getPosition(window);
-			return (localPosition);
-		}
-
-		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-		{
-			return (sf::Vector2i(-1, -1));
-		}
+	    return (sf::Vector2i(-1, -1));
 	}
-	return (sf::Vector2i(-1, -1));
+
+	else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+	{
+	    localPosition = sf::Mouse::getPosition(window);
+	    return (localPosition);
+	}
+
+	else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+	{
+    	    return (sf::Vector2i(-1, -1));
+	}
+    }
+    return (sf::Vector2i(-1, -1));
 }
 
 
