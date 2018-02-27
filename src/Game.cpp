@@ -69,26 +69,46 @@ void Game::resetUnits()
 
 void Game::newTurn()
 {
-    std::vector<int> toRemove;
+    std::vector<int> unitsToRemove;
+	std::vector<int> playersToRemove;
     unsigned int i;
 
+	/* Remove Dead Units*/
     i = 0;
     while (i < _units.size())
     {
-        if (_units[i]->getHp() <= 0)
+        if (_units[i]->isDead())
         {
-            toRemove.push_back(i - 1);
+			unitsToRemove.push_back(i);
         }
         i++;
     }
 
     i = 0;
-    while (i < toRemove.size())
+    while (i < unitsToRemove.size())
     {
-        _units.erase(_units.begin() + toRemove[i]);
+        _units.erase(_units.begin() + unitsToRemove[i]);
         i++;
     }
 
+	/* Remove Player With 0 Units*/
+	i = 0;
+	while (i < _players.size())
+	{
+		if (didLose(*_players[i]))
+		{
+			playersToRemove.push_back(i);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < playersToRemove.size())
+	{
+		_players.erase(_players.begin() + playersToRemove[i]);
+		i++;
+	}
+
+	/* Reset stats */
     i = 0;
     while (i < _units.size())
     {
@@ -394,10 +414,6 @@ int Game::Run(sf::RenderWindow &window)
                     moveUnit(*_units[numUnits], West, 1);
 					musicMovePlayer.play();
                     break;
-
-                case sf::Keyboard::I:
-                    _units[numUnits]->printInfo();
-                    break;
 				
 				case sf::Keyboard::Return:
 					targetPosition = askPosition(window);
@@ -409,24 +425,47 @@ int Game::Run(sf::RenderWindow &window)
                     }
 					break;
 
+				case sf::Keyboard::BackSpace:
+					numUnits++;
+					numPlayer++;
+					break;
+
                 default:
                     break;
             }
         }
 
         /* Check New Turn */
-        if (_units[numUnits]->getMp() <= 0 || _units[numUnits]->isDead())
-        {
-            numUnits++;
-            numPlayer++;
-        }
-        if (numUnits == _players.size())
-        {
-            numUnits = 0;
-            newTurn();
-        }
+		if (numUnits == _players.size())
+		{
+			numUnits = 0;
+			newTurn();
+		}
+		while (_units[numUnits]->isDead())
+		{
+			numUnits++;
+			numPlayer++;
+			if (numUnits == _players.size())
+			{
+				numUnits = 0;
+				newTurn();
+			}
+		}
+
+		/* Check Win */
+		if (_players.size() == 1)
+		{
+			std::cout << _players[0]->getName() << " Wins" << std::endl;
+			//return (END);
+		}
+		else if (_players.size() == 0)
+		{
+			std::cout << "Tie!!!" << std::endl;
+			//return (END);
+		}
 
         /* Window */
+		_units[numUnits]->printInfo();
         reloadUnits();
         window.clear();
         window.draw(_map);

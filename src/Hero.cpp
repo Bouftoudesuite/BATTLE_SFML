@@ -28,7 +28,7 @@ unsigned int Hero::getAttackArea() const
 
 unsigned int Hero::getAttackDammage() const
 {
-    return (100);
+    return (800);
 }
 
 Stats const& Hero::getBaseStats()

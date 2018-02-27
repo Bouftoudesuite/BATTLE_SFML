@@ -6,7 +6,7 @@ Unit::Unit(unsigned int x, unsigned int y, Player& player) : _x(x), _y(y), _play
 
 bool Unit::isDead() const
 {
-    return (getHp() <= 0);
+    return (getHp() == 0);
 }
 
 unsigned int Unit::getX() const
@@ -126,9 +126,10 @@ void Unit::setOwner(Player &player)
 
 void Unit::printInfo()
 {
-    std::cout << getOwner().getName() << std::endl;
-    std::cout << getHp() << std::endl;
-    std::cout << getMp() << std::endl;
+    std::cout << "PLAYER NAME: " << getOwner().getName() << std::endl;
+    std::cout << "HP: " << getHp() << std::endl;
+	std::cout << "AP: " << getAp() << std::endl;
+    std::cout << "MP: " << getMp() << std::endl;
 }
 
 

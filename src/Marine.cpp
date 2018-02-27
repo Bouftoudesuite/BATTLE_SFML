@@ -1,4 +1,4 @@
-#include "Marine.hh"
+ #include "Marine.hh"
 
 UnitField Marine::getField() const
 {

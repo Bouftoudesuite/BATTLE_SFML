@@ -28,7 +28,14 @@ void Attack::perform(unsigned int x, unsigned int y)
         toAttack = _game.getInRange(x, y, _unit.getAttackMinRange(), _unit.getAttackRange(), _unit.getField());
         while (i < toAttack.size())
         {
-            toAttack[i]->setHp((_unit.getHp() - _unit.getAttackDammage()));
+			if ((int)toAttack[i]->getHp() - (int)_unit.getAttackDammage() >= 0)
+			{
+				toAttack[i]->setHp(toAttack[i]->getHp() - _unit.getAttackDammage());
+			}
+			else
+			{
+				toAttack[i]->setHp(0);
+			}
             i++;
         }
     }
