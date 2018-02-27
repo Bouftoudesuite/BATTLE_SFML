@@ -1,4 +1,3 @@
-#include <windows.h>
 #include "Menu.hh"
 
 Menu::Menu(unsigned int width, unsigned int height)
@@ -132,7 +131,6 @@ int Menu::Run(sf::RenderWindow &window)
 
                 case sf::Keyboard::Return:
 		    menuSelect.play();
-		    Sleep(200);
                     return (PLAY);
                 
                 default:

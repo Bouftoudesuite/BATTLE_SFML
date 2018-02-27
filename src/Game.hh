@@ -18,7 +18,7 @@ public:
     ~Game();
     void setMap(Map map);
     void initPlayers();
-    bool canPlaceUnit(int x, int y, Unit const& unit);
+    bool canPlaceUnit(unsigned int x, unsigned int y, Unit const& unit);
     bool placeUnit(Unit* unit);
     bool addUnit(Unit* unit);
     void resetUnits();
@@ -29,7 +29,7 @@ public:
     void moveUnit(Unit& unit, Direction direction, unsigned int n);
     std::vector<Unit*> getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field);
     bool loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
-    bool reloadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
+    bool reloadUnits();
     void drawItems(sf::RenderWindow &window);
     int Run(sf::RenderWindow &window) override;
 private:

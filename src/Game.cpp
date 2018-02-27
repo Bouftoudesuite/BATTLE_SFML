@@ -1,8 +1,7 @@
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Attack.hh"
-#include "Game.hh"
 #include "Hero.hh"
-#include "Menu.hh"
 
 Game::Game(unsigned int width, unsigned int height, Menu const& menu) : _width(width), _height(height), _menu(menu)
 {}
@@ -15,7 +14,7 @@ void Game::setMap(Map map)
     _map = map;
 }
 
-bool Game::canPlaceUnit(int x, int y, Unit const& unit)
+bool Game::canPlaceUnit(unsigned int x, unsigned int y, Unit const& unit)
 {
     unsigned int i;
     UnitField field;
@@ -93,7 +92,7 @@ void Game::newTurn()
     i = 0;
     while (i < _units.size())
     {
-        _units[i]->resetStats();
+        _units[i]->resetActions();
         i++;
     }
 }
@@ -129,20 +128,20 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window)
     while (window.waitEvent(event))
     {
         if (event.type == sf::Event::Closed)
-	{
-	    return (sf::Vector2i(-1, -1));
-	}
+	    {
+	        return (sf::Vector2i(-1, -1));
+	    }
 
-	else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
-	{
-	    localPosition = sf::Mouse::getPosition(window);
-	    return (localPosition);
-	}
+        else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+        {
+            localPosition = sf::Mouse::getPosition(window);
+            return (localPosition);
+        }
 
-	else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-	{
-    	    return (sf::Vector2i(-1, -1));
-	}
+        else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+        {
+            return (sf::Vector2i(-1, -1));
+        }
     }
     return (sf::Vector2i(-1, -1));
 }
@@ -152,8 +151,8 @@ void Game::moveUnit(Unit& unit, Direction direction, unsigned int n)
 {
     unsigned int i;
     unsigned int j;
-    int tmp_x;
-    int tmp_y;
+    unsigned tmp_x;
+    unsigned tmp_y;
     bool stop;
 
     i = 0;
@@ -165,23 +164,23 @@ void Game::moveUnit(Unit& unit, Direction direction, unsigned int n)
     while (i < n)
     {
         switch (direction)
-	{
-	    case North:
-	        tmp_y -= 1;
-		break;
+	    {
+            case North:
+                tmp_y -= 1;
+            break;
 
-	    case South:
-	        tmp_y += 1;
-		break;
+            case South:
+                tmp_y += 1;
+            break;
 
-	    case East:
-	        tmp_x -= 1;
-		break;
+            case East:
+                tmp_x -= 1;
+            break;
 
-	    case West:
-		tmp_x += 1;
-		break;
-	}
+            case West:
+                tmp_x += 1;
+                break;
+	    }
 
         while (j < _units.size())
         {
@@ -204,10 +203,6 @@ void Game::moveUnit(Unit& unit, Direction direction, unsigned int n)
     if (unit.getMp() < n && !stop)
     {
         std::cout << "invalid move: mp" << std::endl;
-    }
-    else if ((tmp_x < 0 || tmp_y < 0) && !stop)
-    {
-        std::cout << "invalid move: oob" << std::endl;
     }
     else if (!canPlaceUnit(tmp_x, tmp_y, unit) && !stop)
     {
@@ -258,7 +253,7 @@ void Game::initPlayers()
     i = 0;
     while (i < _menu.getSelectedItem() + 2)
     {
-        _players.push_back(new Player(i + 1, 10000));
+        _players.push_back(new Player((unsigned int)i + 1, 10000));
         i++;
     }
 
@@ -311,14 +306,14 @@ bool Game::loadUnits(const std::string& tileset, sf::Vector2u tileSize, int widt
     return (true);
 }
 
-bool Game::reloadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height)
+bool Game::reloadUnits()
 {
     unsigned int i;
 
     i = 0;
     while (i < _units.size())
     {
-        if (!_units[i]->reload(tileset, _map.getWidth(), _map.getHeight()))
+        if (!_units[i]->reload())
         {
             return (false);
         }
@@ -362,14 +357,12 @@ int Game::Run(sf::RenderWindow &window)
         return (CLOSE);
     }
 
+    /* Main Loop Game*/
     sf::Event event;
     while (window.waitEvent(event))
     {
-        if (_units[numUnits]->getMp() <= 0 || _units[numUnits]->isDead())
-        {
-            numUnits++;
-            numPlayer++;
-        }
+
+        /* Event */
         if (event.type == sf::Event::Closed)
         {
             return (CLOSE);
@@ -421,14 +414,20 @@ int Game::Run(sf::RenderWindow &window)
             }
         }
 
-
+        /* Check New Turn */
+        if (_units[numUnits]->getMp() <= 0 || _units[numUnits]->isDead())
+        {
+            numUnits++;
+            numPlayer++;
+        }
         if (numUnits == _players.size())
         {
             numUnits = 0;
             newTurn();
         }
 
-        reloadUnits(pathImageSprite, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight());
+        /* Window */
+        reloadUnits();
         window.clear();
         window.draw(_map);
         drawItems(window);

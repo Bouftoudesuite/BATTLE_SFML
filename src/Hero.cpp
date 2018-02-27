@@ -334,15 +334,15 @@ bool Hero::load(const std::string& tileset, sf::Vector2u tileSize, int width, in
     return (true);
 }
 
-bool Hero::reload(const std::string& tileset, int width, int height)
+bool Hero::reload()
 {
     int i = getX();
     int j = getY();
 
-    if (!_tileset.loadFromFile(tileset))
+    /*if (!_tileset.loadFromFile(tileset))
     {
         return (false);
-    }
+    }*/
 
     unsigned int tu = _tileNumber % (_tileset.getSize().x / _tileSize.x);
     unsigned int tv = _tileNumber / (_tileset.getSize().x / _tileSize.x);
