@@ -67,29 +67,28 @@ void Game::resetUnits()
     }
 }
 
-void Game::newTurn()
+void Game::cleanDeadUnits()
 {
-    std::vector<int> unitsToRemove;
+	unsigned int i;
+	std::vector<int> unitsToRemove;
 	std::vector<int> playersToRemove;
-    unsigned int i;
 
 	/* Remove Dead Units*/
-    i = 0;
-    while (i < _units.size())
-    {
-        if (_units[i]->isDead())
-        {
+	i = 0;
+	while (i < _units.size())
+	{
+		if (_units[i]->isDead())
+		{
 			unitsToRemove.push_back(i);
-        }
-        i++;
-    }
-
-    i = 0;
-    while (i < unitsToRemove.size())
-    {
-        _units.erase(_units.begin() + unitsToRemove[i]);
-        i++;
-    }
+		}
+		i++;
+	}
+	i = 0;
+	while (i < unitsToRemove.size())
+	{
+		_units.erase(_units.begin() + unitsToRemove[i]);
+		i++;
+	}
 
 	/* Remove Player With 0 Units*/
 	i = 0;
@@ -107,6 +106,12 @@ void Game::newTurn()
 		_players.erase(_players.begin() + playersToRemove[i]);
 		i++;
 	}
+}
+
+
+void Game::newTurn()
+{
+	unsigned int i;
 
 	/* Reset stats */
     i = 0;
@@ -142,8 +147,17 @@ void Game::convertPixelToCoord(sf::Vector2i& pixelCoord)
 
 sf::Vector2i Game::askPosition(sf::RenderWindow &window)
 {
+	sf::View fixed;
+	sf::Texture texture;
     sf::Vector2i localPosition;
     sf::Event event;
+
+	/* Create a fixed view */
+	fixed = window.getView();
+
+	/* Load image and create sprite */
+	texture.loadFromFile("assets/image/cursorAttack.png");
+	sf::Sprite cursorAttack(texture);
 
     while (window.waitEvent(event))
     {
@@ -162,6 +176,18 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window)
         {
             return (sf::Vector2i(-1, -1));
         }
+
+		/* Set position */       
+		cursorAttack.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+		cursorAttack.setScale(sf::Vector2f(0.1, 0.1));
+
+		/* Window */
+		window.clear();
+		window.draw(_map);
+		drawItems(window);
+		window.setView(fixed);
+		window.draw(cursorAttack);
+		window.display();
     }
     return (sf::Vector2i(-1, -1));
 }
@@ -434,23 +460,9 @@ int Game::Run(sf::RenderWindow &window)
                     break;
             }
         }
-
-        /* Check New Turn */
-		if (numUnits == _players.size())
-		{
-			numUnits = 0;
-			newTurn();
-		}
-		while (_units[numUnits]->isDead())
-		{
-			numUnits++;
-			numPlayer++;
-			if (numUnits == _players.size())
-			{
-				numUnits = 0;
-				newTurn();
-			}
-		}
+		
+		/* Clean Dead Units*/
+		cleanDeadUnits();
 
 		/* Check Win */
 		if (_players.size() == 1)
@@ -462,6 +474,13 @@ int Game::Run(sf::RenderWindow &window)
 		{
 			std::cout << "Tie!!!" << std::endl;
 			//return (END);
+		}
+
+        /* Check New Turn */
+		if (numUnits == _players.size())
+		{
+			numUnits = 0;
+			newTurn();
 		}
 
         /* Window */

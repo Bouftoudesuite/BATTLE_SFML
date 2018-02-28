@@ -22,10 +22,11 @@ public:
     bool placeUnit(Unit* unit);
     bool addUnit(Unit* unit);
     void resetUnits();
+	void cleanDeadUnits();
     void newTurn();
     bool didLose(Player const& player);
     void convertPixelToCoord(sf::Vector2i& pixelCoord);
-    static sf::Vector2i askPosition(sf::RenderWindow &window);
+    sf::Vector2i askPosition(sf::RenderWindow &window);
     void moveUnit(Unit& unit, Direction direction, unsigned int n);
     std::vector<Unit*> getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field);
     bool loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
