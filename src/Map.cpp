@@ -98,7 +98,7 @@ bool Map::canGo(unsigned int x, unsigned int y, const Unit& unit)
     return (false);
 }
 
-CellType** parseMap(unsigned int* width, unsigned int* height)
+CellType** Map::parseMap(unsigned int* width, unsigned int* height)
 {
     char tmp;
     unsigned int i;

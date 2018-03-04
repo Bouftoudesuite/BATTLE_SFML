@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp> 
 #include <SFML/Audio.hpp>
 #include <vector>
+#include "Chat.hh"
 #include "Cscreen.hh"
 #include "Map.hh"
 #include "Menu.hh"
@@ -36,6 +37,7 @@ public:
 private:
     unsigned int _width;
     unsigned int _height;
+	Chat _chat;
     Map _map;
     Menu const& _menu;
     std::vector<Player*> _players;

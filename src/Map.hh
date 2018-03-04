@@ -15,8 +15,9 @@ public:
     CellType getCell(unsigned int x, unsigned int y) const;
     CellProperty getCellProperties(unsigned int x, unsigned int y);
     sf::Vector2u getTilesize() const;
-    bool canGo(unsigned int x, unsigned int y, Unit const&);
     static unsigned int getDistanceBetween(unsigned int firstX, unsigned int firstY, unsigned int secondX, unsigned int secondY);
+	bool canGo(unsigned int x, unsigned int y, Unit const&);
+	static CellType** parseMap(unsigned int* width, unsigned int* height);
     bool load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
@@ -28,6 +29,5 @@ private:
     sf::Texture _tileset;
 };
 
-CellType** parseMap(unsigned int* width, unsigned int* height);
 
 #endif

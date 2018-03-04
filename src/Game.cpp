@@ -184,7 +184,7 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window)
 
 		/* Set position */       
 		cursorAttack.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
-		cursorAttack.setScale(sf::Vector2f(0.1, 0.1));
+		cursorAttack.setScale(sf::Vector2f((float)0.1, (float)0.1));
 
 		/* Window */
 		window.clear();
@@ -382,6 +382,7 @@ int Game::Run(sf::RenderWindow &window)
 	sf::Sound musicMovePlayer;
     sf::SoundBuffer bufferMusicGong;
 	sf::SoundBuffer bufferMusicMovePlayer;
+	const std::string pathChat = "assets/image/chat.png";
     const std::string pathImageMap = "assets/image/Map.png";
     const std::string pathImageSprite = "assets/image/Sprite.png";
     const std::string pathMusicGong = "assets/music/game/gong.ogg";
@@ -396,17 +397,23 @@ int Game::Run(sf::RenderWindow &window)
         return (CLOSE);
     }
 	musicMovePlayer.setBuffer(bufferMusicMovePlayer);
+	musicMovePlayer.setVolume(10);
     musicGong.setBuffer(bufferMusicGong);
+	musicGong.setVolume(20);
     musicGong.play();
 
     if (!_map.load(pathImageMap, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
-    {
+    { 
         return (CLOSE);
     }
     if (!loadUnits(pathImageSprite, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
     {
         return (CLOSE);
     }
+	if (!_chat.load(pathChat, sf::Vector2u(532, 161), _map))
+	{
+		return (CLOSE);
+	}
 
     /* Main Loop Game*/
     sf::Event event;
@@ -493,6 +500,7 @@ int Game::Run(sf::RenderWindow &window)
         reloadUnits();
         window.clear();
         window.draw(_map);
+		window.draw(_chat);
         drawItems(window);
         window.display();
     }
