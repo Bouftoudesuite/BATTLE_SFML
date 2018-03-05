@@ -410,7 +410,7 @@ int Game::Run(sf::RenderWindow &window)
     {
         return (CLOSE);
     }
-	if (!_chat.load(pathChat, sf::Vector2u(532, 161), _map))
+	if (!_chat.load(pathChat, sf::Vector2u(532, 161), _map, window))
 	{
 		return (CLOSE);
 	}
@@ -464,6 +464,7 @@ int Game::Run(sf::RenderWindow &window)
 					break;
 
 				case sf::Keyboard::BackSpace:
+					_chat.addMessage(_units[numUnits]->getOwner().getName() + " passe son tour", sf::Color::Yellow);
 					numUnits++;
 					numPlayer++;
 					break;
@@ -502,6 +503,7 @@ int Game::Run(sf::RenderWindow &window)
         window.draw(_map);
 		window.draw(_chat);
         drawItems(window);
+		_chat.drawMessage(window);
         window.display();
     }
     return (CLOSE);

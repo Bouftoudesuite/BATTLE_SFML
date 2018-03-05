@@ -23,6 +23,7 @@
     <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Carrier.cpp" />
     <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Castle.cpp" />
     <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\CellProperty.cpp" />
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Chat.cpp" />
     <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Corruptor.cpp" />
     <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Game.cpp" />
     <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Hero.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Castle.hh" />
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\CellProperty.hh" />
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\CellType.hh" />
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Chat.hh" />
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Corruptor.hh" />
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Cscreen.hh" />
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Direction.hh" />

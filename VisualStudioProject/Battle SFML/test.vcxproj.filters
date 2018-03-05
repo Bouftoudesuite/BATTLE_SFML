@@ -65,6 +65,9 @@
     <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Marine.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Documents\BATTLE_SFML\src\Chat.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Menu.hh">
@@ -128,6 +131,9 @@
       <Filter>Fichiers sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Marine.hh">
+      <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Documents\BATTLE_SFML\src\Chat.hh">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
   </ItemGroup>
