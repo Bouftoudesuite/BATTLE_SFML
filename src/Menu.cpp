@@ -99,12 +99,16 @@ int Menu::Run(sf::RenderWindow &window)
     sf::SoundBuffer bufferMenuSelect;
     const std::string pathMusicMenuMove = "assets/music/menu/move.ogg";
     const std::string pathMusicMenuSelect = "assets/music/menu/select.ogg";
-	
+
+    menuMusic.openFromFile("assets/music/menu/Richine.ogg");
+    menuMusic.setLoop(true);
+    menuMusic.play();
+
+
     if (!bufferMenuMove.loadFromFile(pathMusicMenuMove) || !bufferMenuSelect.loadFromFile(pathMusicMenuSelect))
     {
         return (CLOSE);
     }
-    menuMusic.setLoop(true);
     menuMove.setBuffer(bufferMenuMove);
     menuSelect.setBuffer(bufferMenuSelect);
 
@@ -113,8 +117,10 @@ int Menu::Run(sf::RenderWindow &window)
     {
         if (event.type == sf::Event::Closed)
         {
+            menuMusic.stop();
             return (CLOSE);
         }
+
         else if (event.type == sf::Event::KeyPressed)
         {
             switch (event.key.code)
@@ -131,6 +137,7 @@ int Menu::Run(sf::RenderWindow &window)
 
                 case sf::Keyboard::Return:
 		    menuSelect.play();
+                    menuMusic.stop();
                     return (PLAY);
                 
                 default:
@@ -142,5 +149,6 @@ int Menu::Run(sf::RenderWindow &window)
         draw(window);
         window.display();
     }
+    menuMusic.stop();
     return (CLOSE);
 }

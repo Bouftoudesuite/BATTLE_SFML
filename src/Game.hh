@@ -17,6 +17,8 @@ class Game : public Cscreen
 public:
     Game(unsigned int width, unsigned int height, Menu const& menu);
     ~Game();
+
+	Chat& getChat();
     void setMap(Map map);
     void initPlayers();
     bool canPlaceUnit(unsigned int x, unsigned int y, Unit const& unit);

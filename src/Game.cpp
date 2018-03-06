@@ -189,7 +189,9 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window)
 		/* Window */
 		window.clear();
 		window.draw(_map);
-		drawItems(window);
+        window.draw(_chat);
+        drawItems(window);
+        _chat.drawMessage(window);
 		window.setView(fixed);
 		window.draw(cursorAttack);
 		window.display();
@@ -480,7 +482,7 @@ int Game::Run(sf::RenderWindow &window)
 		/* Check Win */
 		if (_players.size() == 1)
 		{
-			std::cout << _players[0]->getName() << " Wins" << std::endl;
+			_chat.addMessage(_players[0]->getName() + " Wins !!!", sf::Color::Magenta);
 			//return (END);
 		}
 		else if (_players.size() == 0)
@@ -507,4 +509,9 @@ int Game::Run(sf::RenderWindow &window)
         window.display();
     }
     return (CLOSE);
+}
+
+Chat &Game::getChat()
+{
+    return (_chat);
 }
