@@ -40,5 +40,5 @@ RETURN (in Attack-Mode): left Attack-Mode
 MOUSE LEFT CLICK (in Attack-Mode): Attack to the mouse position
 
 
-### OTHER
+### Other
 BACKSPACE: Skip turn.
