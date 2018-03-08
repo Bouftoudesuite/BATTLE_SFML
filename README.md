@@ -20,16 +20,20 @@ If you are building and running Battle SFML from source, this is the simplest wa
 ## Command
 
 ### Move
-Up: Move Unit to the top.
-Right: Move Unit to the right.
-Left: Move Unit to the left.
-Down: Move Unit to the bottom.
+Up: Move Unit to the top
+
+Right: Move Unit to the right
+
+Left: Move Unit to the left
+
+Down: Move Unit to the bottom
+
 
 ### Attack
-RETURN: Start Attack-Mode.
-ESCAPE (in Attack-Mode): left Attack-Mode.
-RETURN (in Attack-Mode): left Attack-Mode.
-MOUSE LEFT CLICK (in Attack-Mode): Attack to the mouse position.
+RETURN: Start Attack-Mode
+ESCAPE (in Attack-Mode): left Attack-Mode
+RETURN (in Attack-Mode): left Attack-Mode
+MOUSE LEFT CLICK (in Attack-Mode): Attack to the mouse position
 
 ### OTHER
 BACKSPACE: Skip turn.
