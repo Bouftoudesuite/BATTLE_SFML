@@ -1,6 +1,6 @@
-# BATTLE_SFML
+# BATTLE-SFML
 
-BattleSFML is a local (at this time) multi-player 2D turn-based RPG with a minimalist fantasy style in french (at this time).
+Battle-SFML is a local (at this time) multi-player 2D turn-based RPG with a minimalist fantasy style in french (at this time).
 
 It is being coded with C++ and SFML Library (official website is: https://www.sfml-dev.org).
 
@@ -12,11 +12,11 @@ SFML provides a simple interface to the various components of your PC, to ease t
 
 ## The Simplest Setup
 
-If you are building and running Battle SFML from source, this is the simplest way to get started on all operating systems. Here you build and play Battle SFML in a local folder instead of installing it to a standard OS folder (e.g. /usr/local or Program Files).
+If you are building and running Battle-SFML from source, this is the simplest way to get started on all operating systems. Here you build and play Battle-SFML in a local folder instead of installing it to a standard OS folder (e.g. /usr/local or Program Files).
 
 * Clone the Battle-SFML repo into your user directory.
 * Install and configure SFML Library (help: https://www.sfml-dev.org/tutorials/2.4/#getting-started).
-* Compile and run Battle SFML.
+* Compile and run Battle-SFML.
 
 
 
