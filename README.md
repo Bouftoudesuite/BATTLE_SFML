@@ -1,8 +1,8 @@
 # BATTLE_SFML
 
-BattleSFML is a local (at this time) multi-player 2D turn-based RPG with a minimalist fantasy style in french(at this time).
+BattleSFML is a local (at this time) multi-player 2D turn-based RPG with a minimalist fantasy style in french (at this time).
 
-It is being coded with C++ and SFML Library (the official website is: https://www.sfml-dev.org/index-fr.php).
+It is being coded with C++ and SFML Library (official website is: https://www.sfml-dev.org).
 
 SFML provides a simple interface to the various components of your PC, to ease the development of games and multimedia applications. It is composed of five modules: system, window, graphics, audio and network.
 
