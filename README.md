@@ -21,13 +21,13 @@ If you are building and running Battle SFML from source, this is the simplest wa
 ## Command
 
 ### Move
-Up: Move Unit to the top
+KEYBOARD UP: Move Unit to the top
 
-Right: Move Unit to the right
+KEYBOARD RIGHT: Move Unit to the right
 
-Left: Move Unit to the left
+KEYBOARD LEFT: Move Unit to the left
 
-Down: Move Unit to the bottom
+KEYBOARD DOWN: Move Unit to the bottom
 
 
 ### Attack
