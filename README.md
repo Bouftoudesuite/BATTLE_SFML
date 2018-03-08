@@ -6,7 +6,6 @@ It is being coded with C++ and SFML Library (official website is: https://www.sf
 
 SFML provides a simple interface to the various components of your PC, to ease the development of games and multimedia applications. It is composed of five modules: system, window, graphics, audio and network.
 
-
 ![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/Screenshot.PNG)
 
 
@@ -23,6 +22,7 @@ If you are building and running Battle-SFML from source, this is the simplest wa
 ## Command
 
 ### Move
+
 KEYBOARD UP: Move Unit to the top
 
 KEYBOARD RIGHT: Move Unit to the right
@@ -33,13 +33,14 @@ KEYBOARD DOWN: Move Unit to the bottom
 
 
 ### Attack
+
 RETURN: Start Attack-Mode
+
+MOUSE LEFT CLICK (in Attack-Mode): Attack to the mouse position
 
 ESCAPE (in Attack-Mode): left Attack-Mode
 
 RETURN (in Attack-Mode): left Attack-Mode
-
-MOUSE LEFT CLICK (in Attack-Mode): Attack to the mouse position
 
 
 ### Other
