@@ -17,6 +17,7 @@ If you are building and running Battle SFML from source, this is the simplest wa
 * Compile and run Battle SFML.
 
 
+
 ## Command
 
 ### Move
@@ -31,9 +32,13 @@ Down: Move Unit to the bottom
 
 ### Attack
 RETURN: Start Attack-Mode
+
 ESCAPE (in Attack-Mode): left Attack-Mode
+
 RETURN (in Attack-Mode): left Attack-Mode
+
 MOUSE LEFT CLICK (in Attack-Mode): Attack to the mouse position
+
 
 ### OTHER
 BACKSPACE: Skip turn.
