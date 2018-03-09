@@ -359,7 +359,7 @@ bool Game::loadUnits(const std::string& tileset, sf::Vector2u tileSize, int widt
     return (true);
 }
 
-bool Game::reloadUnits()
+bool Game::reloadItems()
 {
     unsigned int i;
 
@@ -372,6 +372,8 @@ bool Game::reloadUnits()
         }
         i++;
     }
+
+    _star.reload();
     return (true);
 }
 
@@ -384,11 +386,13 @@ int Game::Run(sf::RenderWindow &window)
 	sf::Sound musicMovePlayer;
     sf::SoundBuffer bufferMusicGong;
 	sf::SoundBuffer bufferMusicMovePlayer;
-	const std::string pathChat = "assets/image/chat.png";
-    const std::string pathImageMap = "assets/image/Map.png";
-    const std::string pathImageSprite = "assets/image/Sprite.png";
-    const std::string pathMusicGong = "assets/music/game/gong.ogg";
-	const std::string pathMusicMovePlayer = "assets/music/game/move/player.wav";
+	const std::string pathChat              = "assets/image/chat.png";
+    const std::string pathMusicGong         = "assets/music/game/gong.ogg";
+    const std::string pathMusicMovePlayer   = "assets/music/game/move/player.wav";
+    const std::string pathImageMap          = "assets/image/Map.png";
+    const std::string pathImageSprite       = "assets/image/Sprite.png";
+    const std::string pathImageStar         = "assets/image/star.png";
+
 
     numPlayer = 0;
     numUnits = 0;
@@ -416,6 +420,15 @@ int Game::Run(sf::RenderWindow &window)
 	{
 		return (CLOSE);
 	}
+
+    /* Star Position */
+    _star.setX(_units[numUnits]->getX());
+    _star.setY(_units[numUnits]->getY() - 1);
+    if (!_star.load(pathImageStar, sf::Vector2u(16, 16)))
+    {
+        return (CLOSE);
+    }
+
 
     /* Main Loop Game*/
     sf::Event event;
@@ -485,7 +498,7 @@ int Game::Run(sf::RenderWindow &window)
 			_chat.addMessage(_players[0]->getName() + " Wins !!!", sf::Color::Magenta);
 			//return (END);
 		}
-		else if (_players.size() == 0)
+		else if (_players.empty())
 		{
 			std::cout << "Tie!!!" << std::endl;
 			//return (END);
@@ -498,12 +511,18 @@ int Game::Run(sf::RenderWindow &window)
 			newTurn();
 		}
 
+
+        /* Update Star Position */
+        _star.setX(_units[numUnits]->getX());
+        _star.setY(_units[numUnits]->getY() - 1);
+
         /* Window */
 		_units[numUnits]->printInfo();
-        reloadUnits();
+        reloadItems();
         window.clear();
         window.draw(_map);
 		window.draw(_chat);
+        window.draw(_star);
         drawItems(window);
 		_chat.drawMessage(window);
         window.display();

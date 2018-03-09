@@ -6,11 +6,12 @@
 #include <vector>
 #include "Chat.hh"
 #include "Cscreen.hh"
+#include "Direction.hh"
 #include "Map.hh"
 #include "Menu.hh"
-#include "Unit.hh"
 #include "Player.hh"
-#include "Direction.hh"
+#include "Star.hh"
+#include "Unit.hh"
 
 class Game : public Cscreen
 {
@@ -33,7 +34,7 @@ public:
     void moveUnit(Unit& unit, Direction direction, unsigned int n);
     std::vector<Unit*> getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field);
     bool loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
-    bool reloadUnits();
+    bool reloadItems();
     void drawItems(sf::RenderWindow &window);
     int Run(sf::RenderWindow &window) override;
 private:
@@ -41,6 +42,7 @@ private:
     unsigned int _height;
 	Chat _chat;
     Map _map;
+	Star _star;
     Menu const& _menu;
     std::vector<Player*> _players;
     std::vector<Unit*> _units;

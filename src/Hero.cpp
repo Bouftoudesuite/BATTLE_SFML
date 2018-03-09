@@ -339,11 +339,6 @@ bool Hero::reload()
     int i = getX();
     int j = getY();
 
-    /*if (!_tileset.loadFromFile(tileset))
-    {
-        return (false);
-    }*/
-
     unsigned int tu = _tileNumber % (_tileset.getSize().x / _tileSize.x);
     unsigned int tv = _tileNumber / (_tileset.getSize().x / _tileSize.x);
 

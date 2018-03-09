@@ -20,7 +20,7 @@ void Attack::perform(unsigned int x, unsigned int y)
     }
     else if (Map::getDistanceBetween(_unit.getX(), _unit.getY(), x, y) > _unit.getAttackArea())
     {
-        _game.getChat().addMessage("out of range", sf::Color::Red);
+        _game.getChat().addMessage("Attack: out of range", sf::Color::Red);
     }
     else
     {
@@ -36,7 +36,8 @@ void Attack::perform(unsigned int x, unsigned int y)
 			{
 				toAttack[i]->setHp(0);
 			}
-            _game.getChat().addMessage(_unit.getOwner().getName() + " inflige -" + std::to_string(_unit.getAttackDammage()) + "pv au " + toAttack[i]->getOwner().getName(), sf::Color::Yellow);
+            _game.getChat().addMessage(_unit.getOwner().getName() + " lance une attaque", sf::Color::Cyan);
+            _game.getChat().addMessage(_unit.getOwner().getName() + " inflige -" + std::to_string(_unit.getAttackDammage()) + "pv au " + toAttack[i]->getOwner().getName(), sf::Color::Cyan);
             i++;
         }
     }
