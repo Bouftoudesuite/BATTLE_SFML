@@ -191,6 +191,7 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window)
 		window.draw(_map);
         window.draw(_chat);
         drawItems(window);
+		window.draw(_star);
         _chat.drawMessage(window);
 		window.setView(fixed);
 		window.draw(cursorAttack);
@@ -424,7 +425,7 @@ int Game::Run(sf::RenderWindow &window)
     /* Star Position */
     _star.setX(_units[numUnits]->getX());
     _star.setY(_units[numUnits]->getY() - 1);
-    if (!_star.load(pathImageStar, sf::Vector2u(16, 16)))
+    if (!_star.load(pathImageStar, sf::Vector2u(32, 32)))
     {
         return (CLOSE);
     }
@@ -522,8 +523,8 @@ int Game::Run(sf::RenderWindow &window)
         window.clear();
         window.draw(_map);
 		window.draw(_chat);
-        window.draw(_star);
         drawItems(window);
+		window.draw(_star);
 		_chat.drawMessage(window);
         window.display();
     }
