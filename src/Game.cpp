@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Attack.hh"
+#include "AttackArea.hh"
 #include "Hero.hh"
 
 Game::Game(unsigned int width, unsigned int height, Menu const& menu) : _width(width), _height(height), _menu(menu)
@@ -145,12 +146,14 @@ void Game::convertPixelToCoord(sf::Vector2i& pixelCoord)
 }
 
 
-sf::Vector2i Game::askPosition(sf::RenderWindow &window)
+sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
 {
 	sf::View fixed;
 	sf::Texture texture;
     sf::Vector2i localPosition;
     sf::Event event;
+    AttackArea attackArea;
+    std::vector<sf::Vector2u> posReachable;
 
 	/* Create a fixed view */
 	fixed = window.getView();
@@ -158,6 +161,14 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window)
 	/* Load image and create sprite */
 	texture.loadFromFile("assets/image/cursorAttack.png");
 	sf::Sprite cursorAttack(texture);
+
+    /* Load area reachable */
+    posReachable = getPosReachable(unit);
+    if (!attackArea.load(unit, "assets/image/Map.png", sf::Vector2u(32, 32), posReachable))
+    {
+        return (sf::Vector2i(-1, -1));
+    }
+
 
     while (window.waitEvent(event))
     {
@@ -189,13 +200,14 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window)
 		/* Window */
 		window.clear();
 		window.draw(_map);
+        window.draw(attackArea);
         window.draw(_chat);
         drawItems(window);
 		window.draw(_star);
         _chat.drawMessage(window);
 		window.setView(fixed);
 		window.draw(cursorAttack);
-		window.display();
+        window.display();
     }
     return (sf::Vector2i(-1, -1));
 }
@@ -269,6 +281,30 @@ void Game::moveUnit(Unit& unit, Direction direction, unsigned int n)
         unit.setY(tmp_y);
     }
 }
+
+std::vector<sf::Vector2u> Game::getPosReachable(Unit const& unit)
+{
+    unsigned int i;
+    unsigned int j;
+    std::vector<sf::Vector2u> posReachable;
+
+    i = 0;
+    while (i < _map.getWidth())
+    {
+        j = 0;
+        while (j < _map.getHeight())
+        {
+            if (Map::getDistanceBetween(unit.getX(), unit.getY(), i, j) <= unit.getAttackArea() && _map.canGo(i, j, unit))
+            {
+                posReachable.push_back(sf::Vector2u(i, j));
+            }
+            j++;
+        }
+        i++;
+    }
+    return (posReachable);
+}
+
 
 std::vector<Unit*> Game::getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field)
 {
@@ -470,7 +506,7 @@ int Game::Run(sf::RenderWindow &window)
                     break;
 				
 				case sf::Keyboard::Return:
-					targetPosition = askPosition(window);
+					targetPosition = askPosition(window, *_units[numUnits]);
                     if (targetPosition.x != (-1))
                     {
                         convertPixelToCoord(targetPosition);

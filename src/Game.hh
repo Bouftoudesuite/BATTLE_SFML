@@ -20,6 +20,8 @@ public:
     ~Game();
 
 	Chat& getChat();
+    std::vector<sf::Vector2u> getPosReachable(Unit const& unit);
+    std::vector<Unit*> getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field);
     void setMap(Map map);
     void initPlayers();
     bool canPlaceUnit(unsigned int x, unsigned int y, Unit const& unit);
@@ -30,9 +32,9 @@ public:
     void newTurn();
     bool didLose(Player const& player);
     void convertPixelToCoord(sf::Vector2i& pixelCoord);
-    sf::Vector2i askPosition(sf::RenderWindow &window);
+    sf::Vector2i askPosition(sf::RenderWindow &window, Unit const& unit);
     void moveUnit(Unit& unit, Direction direction, unsigned int n);
-    std::vector<Unit*> getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field);
+
     bool loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
     bool reloadItems();
     void drawItems(sf::RenderWindow &window);

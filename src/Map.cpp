@@ -8,7 +8,7 @@
 Map::Map() :
 	_width(20),
 	_height(20),
-	_cells(parseMap(&_width, &_height)),
+	_cells(parseMap(_width, _height)),
 	_tileSize(0, 0)
 {}
 
@@ -98,7 +98,7 @@ bool Map::canGo(unsigned int x, unsigned int y, const Unit& unit)
     return (false);
 }
 
-CellType** Map::parseMap(unsigned int* width, unsigned int* height)
+CellType** Map::parseMap(unsigned int const& width, unsigned int const& height)
 {
     char tmp;
     unsigned int i;
@@ -107,21 +107,23 @@ CellType** Map::parseMap(unsigned int* width, unsigned int* height)
     CellType** _cells;
 
     std::ifstream file("assets/map/map.txt", std::ios::in);
-    if(file)
+    if (file)
     {
         i = 0;
         k = 0;
-        _cells = new CellType*[*width];
-        while (i < *width)
+        _cells = new CellType*[width];
+
+        while (i < width)
         {
-            _cells[i] = new CellType[*height];
+            _cells[i] = new CellType[height];
             i++;
         }
+
         j = 0;
-        while (j < *height)
+        while (j < height)
         {
             i = 0;
-            while (i < *width)
+            while (i < width)
             {
                 file.get(tmp);
                 if (tmp == 'G')
@@ -207,7 +209,7 @@ bool Map::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int w
         }
         i++;
     }
-    return true;
+    return (true);
 }
 
 
