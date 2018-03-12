@@ -26,7 +26,7 @@ bool AttackArea::load(Unit const& unit, const std::string& tileset, sf::Vector2u
         quad[1].texCoords = sf::Vector2f(_tileSize.x, 0);
         quad[2].texCoords = sf::Vector2f(_tileSize.x, _tileSize.y);
         quad[3].texCoords = sf::Vector2f(0, _tileSize.y);
-        
+
         i++;
     }
     return (true);

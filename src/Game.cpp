@@ -164,7 +164,7 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
 
     /* Load area reachable */
     posReachable = getPosReachable(unit);
-    if (!attackArea.load(unit, "assets/image/Map.png", sf::Vector2u(32, 32), posReachable))
+    if (!attackArea.load(unit, "assets/image/areaReachable.png", sf::Vector2u(32, 32), posReachable))
     {
         return (sf::Vector2i(-1, -1));
     }
@@ -526,7 +526,6 @@ int Game::Run(sf::RenderWindow &window)
             }
         }
 		
-		/* Clean Dead Units*/
 		cleanDeadUnits();
 
 		/* Check Win */
