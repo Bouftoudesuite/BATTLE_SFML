@@ -27,14 +27,15 @@ public:
     bool canPlaceUnit(unsigned int x, unsigned int y, Unit const& unit);
     bool placeUnit(Unit* unit);
     bool addUnit(Unit* unit);
+	static bool isReachable(sf::Vector2i coord, std::vector<sf::Vector2u> posReachable);
     void resetUnits();
 	void cleanDeadUnits();
     void newTurn();
     bool didLose(Player const& player);
-    void convertPixelToCoord(sf::Vector2i& pixelCoord);
+	void recalibratePosition(sf::Vector2i& pixelCoord);
+	void convertPixelToCoord(sf::Vector2i& pixelCoord);
     sf::Vector2i askPosition(sf::RenderWindow &window, Unit const& unit);
     void moveUnit(Unit& unit, Direction direction, unsigned int n);
-
     bool loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
     bool reloadItems();
     void drawItems(sf::RenderWindow &window);

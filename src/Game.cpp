@@ -3,6 +3,7 @@
 #include "Attack.hh"
 #include "AttackArea.hh"
 #include "Hero.hh"
+#include "HighlightTile.hh"
 
 Game::Game(unsigned int width, unsigned int height, Menu const& menu) : _width(width), _height(height), _menu(menu)
 {}
@@ -139,12 +140,35 @@ bool Game::didLose(Player const& player)
     return (true);
 }
 
+void Game::recalibratePosition(sf::Vector2i& pixelCoord)
+{
+    pixelCoord.x += 12;
+    pixelCoord.y += 12;
+}
+
+
 void Game::convertPixelToCoord(sf::Vector2i& pixelCoord)
 {
     pixelCoord.x /=  _map.getTilesize().x;
     pixelCoord.y /= _map.getTilesize().y;
 }
 
+
+bool Game::isReachable(sf::Vector2i coord, std::vector<sf::Vector2u> posReachable)
+{
+    unsigned int i;
+
+    i = 0;
+    while (i < posReachable.size())
+    {
+        if ((unsigned int)coord.x == posReachable[i].x && (unsigned int)coord.y == posReachable[i].y)
+        {
+            return (true);
+        }
+        i++;
+    }
+    return (false);
+}
 
 sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
 {
@@ -154,6 +178,7 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
     sf::Event event;
     AttackArea attackArea;
     std::vector<sf::Vector2u> posReachable;
+    HighlightTile highlightTile;
 
 	/* Create a fixed view */
 	fixed = window.getView();
@@ -169,6 +194,11 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
         return (sf::Vector2i(-1, -1));
     }
 
+    /* Load selected area */
+    if (!highlightTile.load("assets/image/selectedTile.png", sf::Vector2u(32, 32)))
+    {
+        return (sf::Vector2i(-1, -1));
+    }
 
     while (window.waitEvent(event))
     {
@@ -177,9 +207,24 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
 	        return (sf::Vector2i(-1, -1));
 	    }
 
+        else if (event.type == sf::Event::MouseMoved)
+        {
+            localPosition = sf::Mouse::getPosition(window);
+            recalibratePosition(localPosition);
+            convertPixelToCoord(localPosition);
+            highlightTile.setX((unsigned int)localPosition.x);
+            highlightTile.setY((unsigned int)localPosition.y);
+            if (isReachable(localPosition, posReachable))
+                highlightTile.setTileNumber(1);
+            else
+                highlightTile.setTileNumber(0);
+            highlightTile.reload();
+        }
+
         else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         {
             localPosition = sf::Mouse::getPosition(window);
+            recalibratePosition(localPosition);
             return (localPosition);
         }
 
@@ -201,6 +246,7 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
 		window.clear();
 		window.draw(_map);
         window.draw(attackArea);
+        window.draw(highlightTile);
         window.draw(_chat);
         drawItems(window);
 		window.draw(_star);
