@@ -142,7 +142,7 @@ bool Game::didLose(Player const& player)
 
 void Game::recalibratePosition(sf::Vector2i& pixelCoord)
 {
-    pixelCoord.x += 12;
+    pixelCoord.x += 8;
     pixelCoord.y += 12;
 }
 
