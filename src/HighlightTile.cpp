@@ -1,5 +1,10 @@
 #include "HighlightTile.hh"
 
+unsigned int HighlightTile::getTileNumber() const
+{
+    return (_tileNumber);
+}
+
 void HighlightTile::setX(unsigned int x)
 {
     _x = x;

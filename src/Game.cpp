@@ -170,7 +170,7 @@ bool Game::isReachable(sf::Vector2i coord, std::vector<sf::Vector2u> posReachabl
     return (false);
 }
 
-sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
+sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
 {
 	sf::View fixed;
 	sf::Texture texture;
@@ -204,7 +204,7 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
     {
         if (event.type == sf::Event::Closed)
 	    {
-	        return (sf::Vector2i(-1, -1));
+	        return (sf::Vector2i(-2, -2));
 	    }
 
         else if (event.type == sf::Event::MouseMoved)
@@ -223,9 +223,14 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
 
         else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         {
-            localPosition = sf::Mouse::getPosition(window);
-            recalibratePosition(localPosition);
-            return (localPosition);
+            if (highlightTile.getTileNumber())
+            {
+                localPosition = sf::Mouse::getPosition(window);
+                recalibratePosition(localPosition);
+
+                return (localPosition);
+            }
+            _chat.addMessage("Attack: out of range", sf::Color::Red);
         }
 
         else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
@@ -237,6 +242,11 @@ sf::Vector2i Game::askPosition(sf::RenderWindow &window, Unit const& unit)
 		{
 			return (sf::Vector2i(-1, -1));
 		}
+
+        else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::BackSpace)
+        {
+            return (sf::Vector2i(-1, -1));
+        }
 
 		/* Set position */       
 		cursorAttack.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
@@ -426,14 +436,14 @@ void Game::drawItems(sf::RenderWindow &window)
     }
 }
 
-bool Game::loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height)
+bool Game::loadUnits(const std::string& tileset, sf::Vector2u tileSize)
 {
     unsigned int i;
 
     i = 0;
     while (i < _units.size())
     {
-        if (!_units[i]->load(tileset, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
+        if (!_units[i]->load(tileset, tileSize))
         {
             return (false);
         }
@@ -476,11 +486,12 @@ int Game::Run(sf::RenderWindow &window)
     const std::string pathImageSprite       = "assets/image/Sprite.png";
     const std::string pathImageStar         = "assets/image/star.png";
 
-
+    /* Init */
     numPlayer = 0;
     numUnits = 0;
     initPlayers();
-    
+
+    /* Load */
     if (!bufferMusicGong.loadFromFile(pathMusicGong) || !bufferMusicMovePlayer.loadFromFile(pathMusicMovePlayer))
     {
         return (CLOSE);
@@ -490,12 +501,11 @@ int Game::Run(sf::RenderWindow &window)
     musicGong.setBuffer(bufferMusicGong);
 	musicGong.setVolume(20);
     musicGong.play();
-
     if (!_map.load(pathImageMap, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
     { 
         return (CLOSE);
     }
-    if (!loadUnits(pathImageSprite, sf::Vector2u(32, 32), _map.getWidth(), _map.getHeight()))
+    if (!loadUnits(pathImageSprite, sf::Vector2u(32, 32)))
     {
         return (CLOSE);
     }
@@ -512,13 +522,11 @@ int Game::Run(sf::RenderWindow &window)
         return (CLOSE);
     }
 
-
     /* Main Loop Game*/
     sf::Event event;
     while (window.waitEvent(event))
     {
 
-        /* Event */
         if (event.type == sf::Event::Closed)
         {
             return (CLOSE);
@@ -527,6 +535,7 @@ int Game::Run(sf::RenderWindow &window)
         {
             switch (event.key.code)
             {
+                // Move
                 case sf::Keyboard::Up:
 					_units[numUnits]->turn(North);
                     moveUnit(*_units[numUnits], North, 1);
@@ -550,17 +559,23 @@ int Game::Run(sf::RenderWindow &window)
                     moveUnit(*_units[numUnits], West, 1);
 					musicMovePlayer.play();
                     break;
-				
+
+
+                // Attack
 				case sf::Keyboard::Return:
-					targetPosition = askPosition(window, *_units[numUnits]);
-                    if (targetPosition.x != (-1))
+					targetPosition = askAttack(window, *_units[numUnits]);
+                    if (targetPosition.x >= 0)
                     {
                         convertPixelToCoord(targetPosition);
                         Attack attack(*this, *_units[numUnits]);
                         attack.perform((unsigned int)targetPosition.x, (unsigned int)targetPosition.y);
                     }
+                    else if (targetPosition.x == (-2))
+                        return (CLOSE);
 					break;
 
+
+                // Skip Turn
 				case sf::Keyboard::BackSpace:
 					_chat.addMessage(_units[numUnits]->getOwner().getName() + " passe son tour", sf::Color::Yellow);
 					numUnits++;
@@ -571,19 +586,18 @@ int Game::Run(sf::RenderWindow &window)
                     break;
             }
         }
-		
-		cleanDeadUnits();
 
 		/* Check Win */
-		if (_players.size() == 1)
+        cleanDeadUnits();
+        if (_players.size() == 1)
 		{
 			_chat.addMessage(_players[0]->getName() + " Wins !!!", sf::Color::Magenta);
-			//return (END);
+			return (END);
 		}
 		else if (_players.empty())
 		{
 			std::cout << "Tie!!!" << std::endl;
-			//return (END);
+			return (END);
 		}
 
         /* Check New Turn */
@@ -592,7 +606,6 @@ int Game::Run(sf::RenderWindow &window)
 			numUnits = 0;
 			newTurn();
 		}
-
 
         /* Update Star Position */
         _star.setX(_units[numUnits]->getX());

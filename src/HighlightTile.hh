@@ -6,6 +6,7 @@
 class HighlightTile : public sf::Drawable, public sf::Transformable
 {
 public:
+    unsigned int getTileNumber() const;
     void setX(unsigned int x);
     void setY(unsigned int y);
     void setTileNumber(unsigned int tileNumber);

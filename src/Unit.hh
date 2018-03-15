@@ -46,9 +46,9 @@ public:
     virtual void resetStats() = 0;
     virtual void resetActions() = 0;
     virtual void turn(Direction direction) = 0;
-    virtual bool load(const std::string& tileset, sf::Vector2u tileSize, int width, int height) = 0;
+    virtual bool load(const std::string& tileset, sf::Vector2u tileSize) = 0;
     virtual bool reload() = 0;
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 protected:
     sf::Vertex *_quad;
     sf::VertexArray _vertices;

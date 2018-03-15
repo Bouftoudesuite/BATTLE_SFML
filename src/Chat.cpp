@@ -32,7 +32,7 @@ bool Chat::load(const std::string& tileset, sf::Vector2u tileSize, Map const& _m
 
 
 	/* Message */
-	if (_font.loadFromFile("assets/font/arial.ttf"))
+	if (_font.loadFromFile("assets/font/dpcomic.ttf"))
 	{
 		_message[0].setFont(_font);
 		_message[0].setString(" ");

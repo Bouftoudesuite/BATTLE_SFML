@@ -7,6 +7,7 @@
 class Tank : public Unit
 {
 public:
+    using Unit::Unit;
     UnitField getField() const override;
     unsigned int getCost() const override;
     unsigned int getAttackRange() const override;
@@ -15,6 +16,9 @@ public:
     static Stats const& getBaseStats();
     void resetStats() override;
     void resetActions() override;
+    void turn(Direction direction) override;
+    bool load(const std::string& tileset, sf::Vector2u tileSize) override;
+    bool reload() override;
 };
 
 #endif

@@ -2,7 +2,7 @@
 
 Menu::Menu(unsigned int width, unsigned int height)
 {
-    if (_font.loadFromFile("assets/font/arial.ttf"))
+    if (_font.loadFromFile("assets/font/dpcomic.ttf"))
     {
         _selectedItemIndex = 0;
         _title.setFont(_font);

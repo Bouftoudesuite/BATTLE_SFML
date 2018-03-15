@@ -263,7 +263,7 @@ void Hero::turn(Direction direction)
 }
 
 
-bool Hero::load(const std::string& tileset, sf::Vector2u tileSize, int width, int height)
+bool Hero::load(const std::string& tileset, sf::Vector2u tileSize)
 {
     int i = getX();
     int j = getY();
@@ -275,7 +275,7 @@ bool Hero::load(const std::string& tileset, sf::Vector2u tileSize, int width, in
 
 	_tileSize = tileSize;
     _vertices.setPrimitiveType(sf::Quads);
-    _vertices.resize(width * height * 4);
+    _vertices.resize(4);
 
     switch (getOwner().getId())
     {
@@ -319,7 +319,7 @@ bool Hero::load(const std::string& tileset, sf::Vector2u tileSize, int width, in
     unsigned int tu = _tileNumber % (_tileset.getSize().x / _tileSize.x);
     unsigned int tv = _tileNumber / (_tileset.getSize().x / _tileSize.x);
 
-    _quad = &_vertices[(i + j * width) * 4];
+    _quad = &_vertices[0];
 
     _quad[0].position = sf::Vector2f(i * _tileSize.x, j * _tileSize.y);
     _quad[1].position = sf::Vector2f((i + 1) * _tileSize.x, j * _tileSize.y);

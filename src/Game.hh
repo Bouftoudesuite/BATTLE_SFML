@@ -34,9 +34,9 @@ public:
     bool didLose(Player const& player);
 	void recalibratePosition(sf::Vector2i& pixelCoord);
 	void convertPixelToCoord(sf::Vector2i& pixelCoord);
-    sf::Vector2i askPosition(sf::RenderWindow &window, Unit const& unit);
+    sf::Vector2i askAttack(sf::RenderWindow &window, Unit const& unit);
     void moveUnit(Unit& unit, Direction direction, unsigned int n);
-    bool loadUnits(const std::string& tileset, sf::Vector2u tileSize, int width, int height);
+    bool loadUnits(const std::string& tileset, sf::Vector2u tileSize);
     bool reloadItems();
     void drawItems(sf::RenderWindow &window);
     int Run(sf::RenderWindow &window) override;
