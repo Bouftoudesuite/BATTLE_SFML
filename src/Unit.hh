@@ -11,7 +11,8 @@
 class Unit : public sf::Drawable, public sf::Transformable
 {
 public:
-    Unit(unsigned int x, unsigned int y, Player &player);
+    Unit(unsigned int x, unsigned int y, Player& player);
+
     bool isDead() const;
     unsigned int getX() const;
     unsigned int getY() const;

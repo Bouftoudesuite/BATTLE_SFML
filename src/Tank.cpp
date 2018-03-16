@@ -25,6 +25,11 @@ unsigned int Tank::getAttackArea() const
     return (4);
 }
 
+unsigned int Tank::getAttackDammage() const
+{
+    return (1000);
+}
+
 Stats const& Tank::getBaseStats()
 {
     static Stats stats {200, 20, 6, 3, 200, 20, 6, 3};
@@ -69,11 +74,11 @@ void Tank::turn(Direction direction)
                 break;
 
             case East:
-                _tileNumber = 8 * (9 + getOwner().getId() - 1);
+                _tileNumber = 8 * (24 + getOwner().getId() - 1);
                 break;
 
             case West:
-                _tileNumber = 8 * (25 + getOwner().getId() - 1);
+                _tileNumber = 8 * (8 + getOwner().getId() - 1);
                 break;
         }
 }
@@ -93,7 +98,7 @@ bool Tank::load(const std::string& tileset, sf::Vector2u tileSize)
     _vertices.setPrimitiveType(sf::Quads);
     _vertices.resize(4);
 
-    _tileNumber = 8 * (9 + getOwner().getId() - 1);
+    _tileNumber = 8 * 17 + getOwner().getId() - 1;
 
     unsigned int tu = _tileNumber % (_tileset.getSize().x / _tileSize.x);
     unsigned int tv = _tileNumber / (_tileset.getSize().x / _tileSize.x);

@@ -60,6 +60,18 @@ bool Chat::load(const std::string& tileset, sf::Vector2u tileSize, Map const& _m
 }
 
 
+void Chat::clear()
+{
+	unsigned int i;
+
+    i = 0;
+	while (i < MAX_MESSAGE)
+	{
+		_message[i].setString(" ");
+		i++;
+	}
+}
+
 void Chat::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();

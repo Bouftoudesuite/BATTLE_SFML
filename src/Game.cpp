@@ -23,6 +23,10 @@ bool Game::canPlaceUnit(unsigned int x, unsigned int y, Unit const& unit)
 
     i = 0;
     field = unit.getField();
+    if (x >= _map.getWidth() || y >= _map.getHeight())
+    {
+        return (false);
+    }
     while (i < _units.size())
     {
         if (_units[i]->getField() == field && _units[i]->getX() == x && _units[i]->getY() == y)
@@ -34,23 +38,23 @@ bool Game::canPlaceUnit(unsigned int x, unsigned int y, Unit const& unit)
     return (_map.canGo(x, y, unit));
 }
 
-bool Game::placeUnit(Unit* unit)
+bool Game::placeUnit(Unit& unit)
 {
-    if (canPlaceUnit(unit->getX(), unit->getY(), *unit))
+    if (canPlaceUnit(unit.getX(), unit.getY(), unit))
     {
-        _units.push_back(unit);
+        _units.push_back(&unit);
         return (true);
     }
     return (false);
 }
 
-bool Game::addUnit(Unit* unit)
+bool Game::addUnit(Unit& unit)
 {
-    if (unit->getOwner().getBudget() >= unit->getCost())
+    if (unit.getOwner().getBudget() >= unit.getCost())
     {
         if (placeUnit(unit))
         {
-            unit->getOwner().setBudget(unit->getOwner().getBudget() - unit->getCost());
+            unit.getOwner().setBudget(unit.getOwner().getBudget() - unit.getCost());
             return (true);
         }
     }
@@ -72,8 +76,8 @@ void Game::resetUnits()
 void Game::cleanDeadUnits()
 {
 	unsigned int i;
-	std::vector<int> unitsToRemove;
-	std::vector<int> playersToRemove;
+	std::vector<unsigned int> unitsToRemove;
+	std::vector<unsigned int> playersToRemove;
 
 	/* Remove Dead Units*/
 	i = 0;
@@ -170,6 +174,163 @@ bool Game::isReachable(sf::Vector2i coord, std::vector<sf::Vector2u> posReachabl
     return (false);
 }
 
+bool Game::askPlaceUnits(sf::RenderWindow &window, Player& player)
+{
+    std::string choice;
+    sf::View fixed;
+    sf::Texture texture;
+    sf::Vector2i localPosition;
+    sf::Event event_placeUnit;
+    sf::Event event_selectUnit;
+    std::vector<sf::Vector2u> posReachable;
+    HighlightTile highlightTile;
+
+    /* Create a fixed view */
+    fixed = window.getView();
+
+    /* Load image and create sprite */
+    texture.loadFromFile("assets/image/cursorAttack.png");
+    sf::Sprite cursorAttack(texture);
+
+    /* Ask Users*/
+    start:
+    _chat.clear();
+    _chat.addMessage("Acheter une unit:\t(Budget: " + std::to_string(player.getBudget()) + "$)", sf::Color::Black);
+    _chat.addMessage("", sf::Color::White);
+    _chat.addMessage("*\tT: Tank\t300$", sf::Color::Black);
+    _chat.addMessage("*\tDelete: None", sf::Color::Black);
+    window.clear();
+    window.draw(_map);
+    window.draw(_chat);
+    drawItems(window);
+    window.draw(_star);
+    _chat.drawMessage(window);
+    window.display();
+
+    while (window.waitEvent(event_selectUnit))
+    {
+        if (event_selectUnit.type == sf::Event::Closed)
+        {
+            return (false);
+        }
+
+        else if (event_selectUnit.type == sf::Event::KeyPressed)
+        {
+            switch (event_selectUnit.key.code)
+            {
+                case sf::Keyboard::T:
+                    choice = "Tank";
+                    goto exit_loop;
+
+                case sf::Keyboard::BackSpace:
+                    return (true);
+
+                case sf::Keyboard::Return:
+                    return (true);
+
+                default:
+                    break;
+            }
+        }
+
+        /* Window */
+        window.clear();
+        window.draw(_map);
+        window.draw(_chat);
+        drawItems(window);
+        window.draw(_star);
+        _chat.drawMessage(window);
+        window.display();
+    }
+
+    exit_loop:
+    /* Load selected area */
+    if (!highlightTile.load("assets/image/selectedTile.png", sf::Vector2u(32, 32)))
+    {
+        return (false);
+    }
+    localPosition = sf::Mouse::getPosition(window);
+    recalibratePosition(localPosition);
+    convertPixelToCoord(localPosition);
+    highlightTile.setX((unsigned int)localPosition.x);
+    highlightTile.setY((unsigned int)localPosition.y);
+    Tank *tmp = new Tank((unsigned int) localPosition.x, (unsigned int) localPosition.y, player);
+    if (canPlaceUnit((unsigned int) localPosition.x, (unsigned int) localPosition.y, *tmp))
+        highlightTile.setTileNumber(1);
+    else
+        highlightTile.setTileNumber(0);
+    highlightTile.reload();
+    free(tmp);
+
+    /* Ask Where place Unit */
+    _chat.clear();
+    _chat.addMessage("Place " + choice + " ?", sf::Color::Black);
+    while (window.waitEvent(event_placeUnit))
+    {
+        if (event_placeUnit.type == sf::Event::Closed)
+        {
+            return (false);
+        }
+
+        else if (event_placeUnit.type == sf::Event::KeyReleased && (event_placeUnit.key.code == sf::Keyboard::Return || event_placeUnit.key.code == sf::Keyboard::Escape || event_placeUnit.key.code == sf::Keyboard::BackSpace))
+        {
+            goto start;
+        }
+
+        else if (event_placeUnit.type == sf::Event::MouseMoved)
+        {
+            localPosition = sf::Mouse::getPosition(window);
+            recalibratePosition(localPosition);
+            convertPixelToCoord(localPosition);
+            highlightTile.setX((unsigned int)localPosition.x);
+            highlightTile.setY((unsigned int)localPosition.y);
+            if (choice == "Tank")
+            {
+                Tank *tmp = new Tank((unsigned int) localPosition.x, (unsigned int) localPosition.y, player);
+                if (canPlaceUnit((unsigned int) localPosition.x, (unsigned int) localPosition.y, *tmp))
+                    highlightTile.setTileNumber(1);
+                else
+                    highlightTile.setTileNumber(0);
+                highlightTile.reload();
+                free(tmp);
+            }
+        }
+
+        else if (event_placeUnit.type == sf::Event::MouseButtonReleased && event_placeUnit.mouseButton.button == sf::Mouse::Left)
+        {
+            if (highlightTile.getTileNumber())
+            {
+                localPosition = sf::Mouse::getPosition(window);
+                recalibratePosition(localPosition);
+                convertPixelToCoord(localPosition);
+                Tank* tmp = new Tank((unsigned int)localPosition.x, (unsigned int)localPosition.y, player);
+                tmp->getCost();
+                if (!tmp->load("assets/image/tank.png", sf::Vector2u(32, 32)))
+                    return (false);
+                addUnit(*tmp);
+                goto start;
+            }
+        }
+
+        /* Set position */
+        cursorAttack.setPosition((sf::Vector2f)(sf::Mouse::getPosition(window)));
+        cursorAttack.setScale(sf::Vector2f((float)0.1, (float)0.1));
+
+        /* Window */
+        window.clear();
+        window.draw(_map);
+        window.draw(highlightTile);
+        window.draw(_chat);
+        drawItems(window);
+        window.draw(_star);
+        _chat.drawMessage(window);
+        window.setView(fixed);
+        window.draw(cursorAttack);
+        window.display();
+    }
+    return (false);
+}
+
 sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
 {
 	sf::View fixed;
@@ -199,7 +360,18 @@ sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
     {
         return (sf::Vector2i(-1, -1));
     }
+    localPosition = sf::Mouse::getPosition(window);
+    recalibratePosition(localPosition);
+    convertPixelToCoord(localPosition);
+    highlightTile.setX((unsigned int)localPosition.x);
+    highlightTile.setY((unsigned int)localPosition.y);
+    if (isReachable(localPosition, posReachable))
+        highlightTile.setTileNumber(1);
+    else
+        highlightTile.setTileNumber(0);
+    highlightTile.reload();
 
+    /* Main loop */
     while (window.waitEvent(event))
     {
         if (event.type == sf::Event::Closed)
@@ -249,7 +421,7 @@ sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
         }
 
 		/* Set position */       
-		cursorAttack.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+		cursorAttack.setPosition((sf::Vector2f)(sf::Mouse::getPosition(window)));
 		cursorAttack.setScale(sf::Vector2f((float)0.1, (float)0.1));
 
 		/* Window */
@@ -408,7 +580,7 @@ void Game::initPlayers()
     {
         tmp_units.push_back(new Hero(std::rand() % _map.getWidth() + 0, std::rand() % _map.getHeight() + 0, *_players[j]));
 
-        while (!addUnit(tmp_units[j]))
+        while (!addUnit(*tmp_units[j]))
         {
             tmp_units[j]->setX(std::rand() % _map.getWidth() + 0);
             tmp_units[j]->setY(std::rand() % _map.getWidth() + 0);
@@ -472,7 +644,6 @@ bool Game::reloadItems()
 
 int Game::Run(sf::RenderWindow &window)
 {
-    int numPlayer;
     int numUnits;
 	sf::Vector2i targetPosition;
     sf::Sound musicGong;
@@ -487,7 +658,6 @@ int Game::Run(sf::RenderWindow &window)
     const std::string pathImageStar         = "assets/image/star.png";
 
     /* Init */
-    numPlayer = 0;
     numUnits = 0;
     initPlayers();
 
@@ -521,6 +691,22 @@ int Game::Run(sf::RenderWindow &window)
     {
         return (CLOSE);
     }
+
+    /* Ask Each Player to Place Unit */
+    unsigned long capturePlayersSize = _players.size();
+    while (numUnits < capturePlayersSize)
+    {
+        _star.setX(_units[numUnits]->getX());
+        _star.setY(_units[numUnits]->getY() - 1);
+        _star.reload();
+        if (!askPlaceUnits(window, _units[numUnits]->getOwner()))
+            return (CLOSE);
+        numUnits++;
+    }
+    numUnits = 0;
+    resetUnits();
+    _chat.clear();
+    _chat.addMessage("Le combat commence", sf::Color::Black);
 
     /* Main Loop Game*/
     sf::Event event;
@@ -579,7 +765,6 @@ int Game::Run(sf::RenderWindow &window)
 				case sf::Keyboard::BackSpace:
 					_chat.addMessage(_units[numUnits]->getOwner().getName() + " passe son tour", sf::Color::Yellow);
 					numUnits++;
-					numPlayer++;
 					break;
 
                 default:
@@ -594,14 +779,14 @@ int Game::Run(sf::RenderWindow &window)
 			_chat.addMessage(_players[0]->getName() + " Wins !!!", sf::Color::Magenta);
 			return (END);
 		}
-		else if (_players.empty())
+        else if (_players.empty())
 		{
 			std::cout << "Tie!!!" << std::endl;
 			return (END);
 		}
 
         /* Check New Turn */
-		if (numUnits == _players.size())
+		if (numUnits == _units.size())
 		{
 			numUnits = 0;
 			newTurn();
