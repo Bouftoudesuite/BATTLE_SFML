@@ -21,6 +21,7 @@ public:
 
 	Chat& getChat();
     std::vector<sf::Vector2u> getPosReachable(Unit const& unit);
+    std::vector<sf::Vector2u> getColateral(unsigned int x, unsigned int y, Unit const& unit);
     std::vector<Unit*> getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field);
     void setMap(Map map);
     void initPlayers();

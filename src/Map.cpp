@@ -6,7 +6,7 @@
 #include "Map.hh"
 
 Map::Map() :
-	_width(20),
+	_width(40),
 	_height(20),
 	_cells(parseMap(_width, _height)),
 	_tileSize(0, 0)

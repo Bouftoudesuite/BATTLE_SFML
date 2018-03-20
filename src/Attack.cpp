@@ -18,10 +18,6 @@ void Attack::perform(unsigned int x, unsigned int y)
     {
         _game.getChat().addMessage("no more actions can be performed", sf::Color::Red);
     }
-    else if (Map::getDistanceBetween(_unit.getX(), _unit.getY(), x, y) > _unit.getAttackArea())
-    {
-        _game.getChat().addMessage("Attack: out of range", sf::Color::Red);
-    }
     else
     {
         _unit.setAp(_unit.getAp() - 1);

@@ -4,6 +4,7 @@
 #include "AttackArea.hh"
 #include "Hero.hh"
 #include "HighlightTile.hh"
+#include "PreviewAttackZone.hh"
 
 Game::Game(unsigned int width, unsigned int height, Menu const& menu) : _width(width), _height(height), _menu(menu)
 {}
@@ -338,8 +339,10 @@ sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
     sf::Vector2i localPosition;
     sf::Event event;
     AttackArea attackArea;
-    std::vector<sf::Vector2u> posReachable;
     HighlightTile highlightTile;
+    PreviewAttackZone previewAttackZone;
+    std::vector<sf::Vector2u> posReachable;
+    std::vector<sf::Vector2u> posColateral;
 
 	/* Create a fixed view */
 	fixed = window.getView();
@@ -366,7 +369,11 @@ sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
     highlightTile.setX((unsigned int)localPosition.x);
     highlightTile.setY((unsigned int)localPosition.y);
     if (isReachable(localPosition, posReachable))
+    {
         highlightTile.setTileNumber(1);
+        posColateral = getColateral((unsigned int)localPosition.x, (unsigned int)localPosition.y, unit);
+        previewAttackZone.load(unit, "assets/image/areaReachable.png", sf::Vector2u(32, 32), posColateral);
+    }
     else
         highlightTile.setTileNumber(0);
     highlightTile.reload();
@@ -390,6 +397,8 @@ sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
                 highlightTile.setTileNumber(1);
             else
                 highlightTile.setTileNumber(0);
+            posColateral = getColateral((unsigned int)localPosition.x, (unsigned int)localPosition.y, unit);
+            previewAttackZone.load(unit, "assets/image/previewAttack.png", sf::Vector2u(32, 32), posColateral);
             highlightTile.reload();
         }
 
@@ -428,6 +437,8 @@ sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
 		window.clear();
 		window.draw(_map);
         window.draw(attackArea);
+        if (highlightTile.getTileNumber())
+            window.draw(previewAttackZone);
         window.draw(highlightTile);
         window.draw(_chat);
         drawItems(window);
@@ -524,7 +535,7 @@ std::vector<sf::Vector2u> Game::getPosReachable(Unit const& unit)
         {
             if (Map::getDistanceBetween(unit.getX(), unit.getY(), i, j) <= unit.getAttackArea() && _map.canGo(i, j, unit))
             {
-                posReachable.push_back(sf::Vector2u(i, j));
+                posReachable.emplace_back(sf::Vector2u(i, j));
             }
             j++;
         }
@@ -533,6 +544,32 @@ std::vector<sf::Vector2u> Game::getPosReachable(Unit const& unit)
     return (posReachable);
 }
 
+std::vector<sf::Vector2u> Game::getColateral(unsigned int x, unsigned int y, Unit const& unit)
+{
+    unsigned int i;
+    unsigned int j;
+    UnitField field;
+    std::vector<sf::Vector2u> posColateral;
+
+    i = 0;
+    while (i < _map.getWidth())
+    {
+        j = 0;
+        while (j < _map.getHeight())
+        {
+            if (((i >= x + unit.getAttackMinRange() && i <= x + unit.getAttackRange()) // x en bas
+                 || (i <= x - unit.getAttackMinRange() && i >= x - unit.getAttackRange()))  // x en haut
+                && ((j >= y + unit.getAttackMinRange() && j <= y + unit.getAttackRange()) // y en bas
+                    || (j <= y - unit.getAttackMinRange() && j >= y - unit.getAttackRange()))) // y en haut
+            {
+                posColateral.emplace_back(sf::Vector2u(i, j));
+            }
+            j++;
+        }
+        i++;
+    }
+    return (posColateral);
+}
 
 std::vector<Unit*> Game::getInRange(unsigned int x, unsigned int y, unsigned int rangeMin, unsigned int rangeMax, UnitField field)
 {
@@ -549,8 +586,7 @@ std::vector<Unit*> Game::getInRange(unsigned int x, unsigned int y, unsigned int
         else if (((_units[i]->getX() >= x + rangeMin && _units[i]->getX() <= x + rangeMax) // x en bas
                     || (_units[i]->getX() <= x - rangeMin && _units[i]->getX() >= x - rangeMax))  // x en haut
                  && ((_units[i]->getY() >= y + rangeMin && _units[i]->getY() <= y + rangeMax) // y en bas
-                    || (_units[i]->getY() <= y - rangeMin && _units[i]->getY() >= y - rangeMax))  // y en haut
-                 && _units[i]->getField() == field) // field
+                    || (_units[i]->getY() <= y - rangeMin && _units[i]->getY() >= y - rangeMax))) // y en haut
         {
             inRange.push_back(_units[i]);
         }
@@ -745,7 +781,6 @@ int Game::Run(sf::RenderWindow &window)
                     moveUnit(*_units[numUnits], West, 1);
 					musicMovePlayer.play();
                     break;
-
 
                 // Attack
 				case sf::Keyboard::Return:
