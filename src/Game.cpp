@@ -372,7 +372,7 @@ sf::Vector2i Game::askAttack(sf::RenderWindow &window, Unit const& unit)
     {
         highlightTile.setTileNumber(1);
         posColateral = getColateral((unsigned int)localPosition.x, (unsigned int)localPosition.y, unit);
-        previewAttackZone.load(unit, "assets/image/areaReachable.png", sf::Vector2u(32, 32), posColateral);
+        previewAttackZone.load(unit, "assets/image/previewAttack.png", sf::Vector2u(32, 32), posColateral);
     }
     else
         highlightTile.setTileNumber(0);
@@ -557,10 +557,7 @@ std::vector<sf::Vector2u> Game::getColateral(unsigned int x, unsigned int y, Uni
         j = 0;
         while (j < _map.getHeight())
         {
-            if (((i >= x + unit.getAttackMinRange() && i <= x + unit.getAttackRange()) // x en bas
-                 || (i <= x - unit.getAttackMinRange() && i >= x - unit.getAttackRange()))  // x en haut
-                && ((j >= y + unit.getAttackMinRange() && j <= y + unit.getAttackRange()) // y en bas
-                    || (j <= y - unit.getAttackMinRange() && j >= y - unit.getAttackRange()))) // y en haut
+            if (Map::getDistanceBetween(i, j, x, y) >= unit.getAttackMinRange() && Map::getDistanceBetween(i, j, x, y) <= unit.getAttackRange()) // y en haut
             {
                 posColateral.emplace_back(sf::Vector2u(i, j));
             }
@@ -583,10 +580,7 @@ std::vector<Unit*> Game::getInRange(unsigned int x, unsigned int y, unsigned int
         {
             std::cout << "invalid range" << std::endl;
         }
-        else if (((_units[i]->getX() >= x + rangeMin && _units[i]->getX() <= x + rangeMax) // x en bas
-                    || (_units[i]->getX() <= x - rangeMin && _units[i]->getX() >= x - rangeMax))  // x en haut
-                 && ((_units[i]->getY() >= y + rangeMin && _units[i]->getY() <= y + rangeMax) // y en bas
-                    || (_units[i]->getY() <= y - rangeMin && _units[i]->getY() >= y - rangeMax))) // y en haut
+        else if (Map::getDistanceBetween(_units[i]->getX(), _units[i]->getY(), x, y) >= rangeMin && Map::getDistanceBetween(_units[i]->getX(), _units[i]->getY(), x, y) <= rangeMax)
         {
             inRange.push_back(_units[i]);
         }

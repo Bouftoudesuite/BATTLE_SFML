@@ -12,12 +12,12 @@ unsigned int Tank::getCost() const
 
 unsigned int Tank::getAttackRange() const
 {
-    return (5);
+    return (8);
 }
 
 unsigned int Tank::getAttackMinRange() const
 {
-    return (2);
+    return (6);
 }
 
 unsigned int Tank::getAttackArea() const
