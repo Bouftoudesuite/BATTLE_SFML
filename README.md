@@ -46,8 +46,8 @@ BACKSPACE: Skip turn.
 
 ## Screenshots
 
-![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.png)
-![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.png)
-![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.png)
-![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.png)
+![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.PNG)
+![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.PNG)
+![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.PNG)
+![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.PNG)
 
