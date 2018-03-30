@@ -39,6 +39,11 @@ ESCAPE (in Attack-Mode): left Attack-Mode
 
 RETURN (in Attack-Mode): left Attack-Mode
 
+
+### Other
+BACKSPACE: Skip turn.
+
+
 ## Screenshots
 
 ![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.png)
@@ -46,6 +51,3 @@ RETURN (in Attack-Mode): left Attack-Mode
 ![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.png)
 ![Screenshot Game](https://github.com/habi-a/BATTLE_SFML/blob/master/assets/image/screenshots/Capture.png)
 
-
-### Other
-BACKSPACE: Skip turn.
