@@ -1,4 +1,5 @@
 # BATTLE-SFML
+(This is my first game from scratch)
 
 Battle-SFML is a local (at this time) multi-player 2D turn-based RPG with a minimalist fantasy style in french (at this time).
 
