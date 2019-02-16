@@ -1,5 +1,5 @@
 # BATTLE-SFML
-(This is my first game from scratch)
+<em>WARNING: This is my first game in C++ so the code might be very ugly xD</em>
 
 Battle-SFML is a local (at this time) multi-player 2D turn-based RPG with a minimalist fantasy style in french (at this time).
 
